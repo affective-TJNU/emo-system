@@ -1,0 +1,42 @@
+{
+  "CADD_DCCNN": {
+    "model": "CADD_DCCNN",
+    "model_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_210224/model_best.pth",
+    "save_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_210224",
+    "meta_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_210224/training_meta.json",
+    "max_acc": 0.775,
+    "feature_type": "de_comp_4ch_1p5s"
+  },
+  "DGConformer": {
+    "model": "DGConformer",
+    "model_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_164243/model_best.pth",
+    "save_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_164243",
+    "meta_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_164243/training_meta.json",
+    "max_acc": 0.85,
+    "feature_type": "de_comp_4ch_1p5s"
+  },
+  "EEGMatch": {
+    "model": "EEGMatch",
+    "model_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_170445/model_best.pth",
+    "save_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_170445",
+    "meta_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_170445/training_meta.json",
+    "max_acc": 0.775,
+    "feature_type": "de_comp_4ch_1p5s"
+  },
+  "CCA_RMPG": {
+    "model": "CCA_RMPG",
+    "model_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_164035/model_best.pth",
+    "save_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_164035",
+    "meta_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_164035/training_meta.json",
+    "max_acc": 0.675,
+    "feature_type": "de_comp_4ch_1p5s"
+  },
+  "ATGRNet": {
+    "model": "ATGRNet",
+    "model_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_173620/model_best.pth",
+    "save_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_173620",
+    "meta_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_173620/training_meta.json",
+    "max_acc": 0.8125,
+    "feature_type": "de_comp_4ch_1p5s"
+  }
+}

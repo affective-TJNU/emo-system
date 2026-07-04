@@ -1,0 +1,527 @@
+{
+  "latest": {
+    "emotion_results": {
+      "negative": 35.56,
+      "neutral": 28.57,
+      "positive": 35.88
+    },
+    "primary_emotion": "positive",
+    "confidence": 0.3587561859958619,
+    "window_sec": 1.5,
+    "feature": "de_bandpower",
+    "stream": "metabci_brainflow",
+    "t_sec": null,
+    "subject_id": 15,
+    "timestamp": "2026-07-01T13:58:27.469001",
+    "source": "online"
+  },
+  "predictions": [
+    {
+      "emotion_results": {
+        "negative": 28.94,
+        "neutral": 38.16,
+        "positive": 32.9
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.3815908310106592,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 1,
+      "timestamp": "2026-06-30T18:38:33.265190",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 30.68,
+        "neutral": 41.82,
+        "positive": 27.5
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.4182112605804993,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 2,
+      "timestamp": "2026-06-30T18:38:33.291939",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 37.24,
+        "neutral": 31.77,
+        "positive": 30.99
+      },
+      "primary_emotion": "negative",
+      "confidence": 0.37237838180783167,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 3,
+      "timestamp": "2026-06-30T18:38:33.300398",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 28.96,
+        "neutral": 28.49,
+        "positive": 42.55
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.42553754677604066,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 4,
+      "timestamp": "2026-06-30T18:38:33.307504",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 30.52,
+        "neutral": 46.49,
+        "positive": 22.99
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.46491764004055236,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 5,
+      "timestamp": "2026-06-30T18:38:33.315294",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 44.92,
+        "neutral": 27.09,
+        "positive": 27.99
+      },
+      "primary_emotion": "negative",
+      "confidence": 0.44924198325516274,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 6,
+      "timestamp": "2026-06-30T18:38:33.326417",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 28.14,
+        "neutral": 20.4,
+        "positive": 51.46
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.5145754413139524,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 7,
+      "timestamp": "2026-06-30T18:38:33.339106",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 24.8,
+        "neutral": 30.73,
+        "positive": 44.47
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.4446574549478918,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 8,
+      "timestamp": "2026-06-30T18:38:33.353858",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 36.16,
+        "neutral": 31.02,
+        "positive": 32.82
+      },
+      "primary_emotion": "negative",
+      "confidence": 0.361560048135031,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 9,
+      "timestamp": "2026-06-30T18:38:33.366627",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 30.63,
+        "neutral": 30.34,
+        "positive": 39.03
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.39028240575449175,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 10,
+      "timestamp": "2026-06-30T18:38:33.381170",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 34.67,
+        "neutral": 23.57,
+        "positive": 41.76
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.417551913471491,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 11,
+      "timestamp": "2026-06-30T18:38:33.394614",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 27.72,
+        "neutral": 38.36,
+        "positive": 33.92
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.38364385417165525,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 12,
+      "timestamp": "2026-06-30T18:38:33.413088",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 35.75,
+        "neutral": 25.34,
+        "positive": 38.91
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.3891117704121933,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 13,
+      "timestamp": "2026-06-30T18:38:33.434705",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 29.6,
+        "neutral": 37.32,
+        "positive": 33.08
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.37319134303512075,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 14,
+      "timestamp": "2026-06-30T18:38:33.456731",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 35.56,
+        "neutral": 28.57,
+        "positive": 35.88
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.3587561859958619,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 15,
+      "timestamp": "2026-06-30T18:38:33.477772",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 28.94,
+        "neutral": 38.16,
+        "positive": 32.9
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.3815908310106592,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 1,
+      "timestamp": "2026-07-01T13:58:26.259861",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 30.68,
+        "neutral": 41.82,
+        "positive": 27.5
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.4182112605804993,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 2,
+      "timestamp": "2026-07-01T13:58:26.469571",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 37.24,
+        "neutral": 31.77,
+        "positive": 30.99
+      },
+      "primary_emotion": "negative",
+      "confidence": 0.37237838180783167,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 3,
+      "timestamp": "2026-07-01T13:58:26.536412",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 28.96,
+        "neutral": 28.49,
+        "positive": 42.55
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.42553754677604066,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 4,
+      "timestamp": "2026-07-01T13:58:26.609314",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 30.52,
+        "neutral": 46.49,
+        "positive": 22.99
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.46491764004055236,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 5,
+      "timestamp": "2026-07-01T13:58:26.690858",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 44.92,
+        "neutral": 27.09,
+        "positive": 27.99
+      },
+      "primary_emotion": "negative",
+      "confidence": 0.44924198325516274,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 6,
+      "timestamp": "2026-07-01T13:58:26.763760",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 28.14,
+        "neutral": 20.4,
+        "positive": 51.46
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.5145754413139524,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 7,
+      "timestamp": "2026-07-01T13:58:26.840228",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 24.8,
+        "neutral": 30.73,
+        "positive": 44.47
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.4446574549478918,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 8,
+      "timestamp": "2026-07-01T13:58:26.913752",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 36.16,
+        "neutral": 31.02,
+        "positive": 32.82
+      },
+      "primary_emotion": "negative",
+      "confidence": 0.361560048135031,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 9,
+      "timestamp": "2026-07-01T13:58:26.987138",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 30.63,
+        "neutral": 30.34,
+        "positive": 39.03
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.39028240575449175,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 10,
+      "timestamp": "2026-07-01T13:58:27.061698",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 34.67,
+        "neutral": 23.57,
+        "positive": 41.76
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.417551913471491,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 11,
+      "timestamp": "2026-07-01T13:58:27.134491",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 27.72,
+        "neutral": 38.36,
+        "positive": 33.92
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.38364385417165525,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 12,
+      "timestamp": "2026-07-01T13:58:27.212188",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 35.75,
+        "neutral": 25.34,
+        "positive": 38.91
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.3891117704121933,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 13,
+      "timestamp": "2026-07-01T13:58:27.296788",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 29.6,
+        "neutral": 37.32,
+        "positive": 33.08
+      },
+      "primary_emotion": "neutral",
+      "confidence": 0.37319134303512075,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 14,
+      "timestamp": "2026-07-01T13:58:27.387220",
+      "source": "online"
+    },
+    {
+      "emotion_results": {
+        "negative": 35.56,
+        "neutral": 28.57,
+        "positive": 35.88
+      },
+      "primary_emotion": "positive",
+      "confidence": 0.3587561859958619,
+      "window_sec": 1.5,
+      "feature": "de_bandpower",
+      "stream": "metabci_brainflow",
+      "t_sec": null,
+      "subject_id": 15,
+      "timestamp": "2026-07-01T13:58:27.469001",
+      "source": "online"
+    }
+  ],
+  "summary": {
+    "predictions": 15,
+    "success_posts": 15,
+    "stream": "metabci_brainflow",
+    "module": "metabci.brainflow.workers.ProcessWorker",
+    "mode": "simulate",
+    "n_windows": 15,
+    "replay_subjects": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15
+    ],
+    "output_json": "/mnt/external_ssd/annaying2024/emotion-bci-competition/outputs/03_brainflow_online.json"
+  },
+  "updated_at": "2026-07-01T13:58:30.490282"
+}

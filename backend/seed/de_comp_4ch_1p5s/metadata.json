@@ -1,0 +1,77 @@
+{
+  "channels": [
+    "AF3",
+    "AF4",
+    "F3",
+    "F4"
+  ],
+  "channel_indices_seed62": [
+    1,
+    17,
+    3,
+    19
+  ],
+  "window_sec": 1.5,
+  "sample_rate": 200,
+  "window_samples": 300,
+  "bands": {
+    "delta": [
+      1.0,
+      4.0
+    ],
+    "theta": [
+      4.0,
+      8.0
+    ],
+    "alpha": [
+      8.0,
+      14.0
+    ],
+    "beta": [
+      14.0,
+      31.0
+    ],
+    "gamma": [
+      31.0,
+      50.0
+    ]
+  },
+  "feature_type": "DE",
+  "max_segments_per_trial": 176,
+  "data_shape_trial": [
+    15,
+    3,
+    15,
+    4,
+    176,
+    5
+  ],
+  "label_values": {
+    "negative": -1,
+    "neutral": 0,
+    "positive": 1
+  },
+  "trial_labels": [
+    1,
+    0,
+    -1,
+    -1,
+    0,
+    1,
+    -1,
+    0,
+    1,
+    1,
+    0,
+    -1,
+    0,
+    1,
+    -1
+  ],
+  "raw_data_dir": "/home/lihanyue/home/workspace/emo-system/backend/seed/Preprocessed_EEG",
+  "pipeline": "brainda_raw_to_de",
+  "brainda_api": "metabci.brainda.utils.io.loadmat",
+  "segmentation": "non_overlapping_1.5s_pad_to_max",
+  "segment_count_min": 123,
+  "segment_count_max": 176
+}

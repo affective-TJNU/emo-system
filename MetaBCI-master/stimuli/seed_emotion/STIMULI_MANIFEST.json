@@ -1,0 +1,70 @@
+{
+  "source": "OASIS (Open Affective Standardized Image Set)",
+  "citation": "Kurdi, Lozano, & Banaji (2017), Behavior Research Methods",
+  "license": "Research use; see https://osf.io/6pnd7/",
+  "images": [
+    {
+      "emotion": "positive",
+      "filename": "positive_01.png",
+      "oasis_theme": "Dog 6",
+      "oasis_valence_mean": 6.49019607843137,
+      "oasis_category": "Animal"
+    },
+    {
+      "emotion": "positive",
+      "filename": "positive_02.png",
+      "oasis_theme": "Beach 1",
+      "oasis_valence_mean": 6.36633663366337,
+      "oasis_category": "Scene"
+    },
+    {
+      "emotion": "positive",
+      "filename": "positive_03.png",
+      "oasis_theme": "Penguins 2",
+      "oasis_valence_mean": 6.20792079207921,
+      "oasis_category": "Animal"
+    },
+    {
+      "emotion": "neutral",
+      "filename": "neutral_01.png",
+      "oasis_theme": "Desert 1",
+      "oasis_valence_mean": 4.0,
+      "oasis_category": "Scene"
+    },
+    {
+      "emotion": "neutral",
+      "filename": "neutral_02.png",
+      "oasis_theme": "Cardboard 2",
+      "oasis_valence_mean": 4.00925925925926,
+      "oasis_category": "Object"
+    },
+    {
+      "emotion": "neutral",
+      "filename": "neutral_03.png",
+      "oasis_theme": "Paperclips 1",
+      "oasis_valence_mean": 3.99019607843137,
+      "oasis_category": "Object"
+    },
+    {
+      "emotion": "negative",
+      "filename": "negative_01.png",
+      "oasis_theme": "Garbage dump 3",
+      "oasis_valence_mean": 2.0,
+      "oasis_category": "Scene"
+    },
+    {
+      "emotion": "negative",
+      "filename": "negative_02.png",
+      "oasis_theme": "Spider 1",
+      "oasis_valence_mean": 3.06862745098039,
+      "oasis_category": "Animal"
+    },
+    {
+      "emotion": "negative",
+      "filename": "negative_03.png",
+      "oasis_theme": "Tornado 1",
+      "oasis_valence_mean": 2.09803921568627,
+      "oasis_category": "Scene"
+    }
+  ]
+}
