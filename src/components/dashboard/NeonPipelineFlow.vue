@@ -147,6 +147,7 @@ function getStatus(idx: number): NodeStatus {
   if (props.statuses?.length === 4) return props.statuses[idx];
   if (props.preprocessingDone || (props.processStep ?? 0) > idx) return 'completed';
   if (props.loading && (props.processStep ?? 0) === idx) return 'running';
+  if (props.loading && (props.processStep ?? 0) >= 4) return 'completed';
   return 'pending';
 }
 

@@ -96,7 +96,7 @@
                <div class="flow-header">
                  <div class="header-glow"></div>
                  <h4 class="flow-title">
-                   <span class="title-text">{{ selectedModel }}模型分析脑电信号</span>
+                   <span class="title-text">{{ featureFlowStatusText }}</span>
                    <div class="title-scanner"></div>
                  </h4>
                  
@@ -702,8 +702,73 @@ const isFullscreen = ref(false);
 const dataProcessStep = ref(0);
 const featureFlowStep = ref(0);
 const featureWaitingBackend = ref(false);
+const featureBackendFinished = ref(false);
+const backendTrainingPercent = ref(0);
+const backendTrainingEpoch = ref(0);
+const backendTrainingTotalEpochs = ref(0);
 const FEATURE_FLOW_TOTAL_STEPS = 5;
+const FEATURE_PRE_TRAIN_MAX = 12;
+const FEATURE_TRAIN_SPAN = 83;
 const featureFlowTimers = ref<Array<ReturnType<typeof setTimeout>>>([]);
+let featureProgressPollTimer: ReturnType<typeof setInterval> | null = null;
+
+const stopFeatureProgressPoll = () => {
+  if (featureProgressPollTimer) {
+    clearInterval(featureProgressPollTimer);
+    featureProgressPollTimer = null;
+  }
+};
+
+const syncFeatureFlowStepFromTraining = (trainingPct: number) => {
+  if (!featureWaitingBackend.value) return;
+  if (trainingPct >= 66 && featureFlowStep.value < 4) {
+    featureFlowStep.value = 4;
+  } else if (trainingPct >= 33 && featureFlowStep.value < 3) {
+    featureFlowStep.value = 3;
+  }
+};
+
+const pollFeatureTrainingProgress = async () => {
+  if (!featureFlowLoading.value || !featureWaitingBackend.value) return;
+  try {
+    const resp = await api.featureLearningProgress();
+    const progress = resp.progress;
+    if (!progress) return;
+
+    backendTrainingEpoch.value = Math.max(0, progress.epoch + 1);
+    backendTrainingTotalEpochs.value = progress.total_epochs || backendTrainingTotalEpochs.value;
+
+    if (progress.total_epochs > 0 && progress.epoch >= 0) {
+      backendTrainingPercent.value = Math.round(
+        ((progress.epoch + 1) / progress.total_epochs) * 100,
+      );
+    } else if (progress.percent > 0) {
+      backendTrainingPercent.value = Math.min(100, progress.percent);
+    }
+
+    syncFeatureFlowStepFromTraining(backendTrainingPercent.value);
+  } catch (error) {
+    console.warn('特征学习进度轮询失败:', error);
+  }
+};
+
+const startFeatureProgressPoll = () => {
+  stopFeatureProgressPoll();
+  void pollFeatureTrainingProgress();
+  featureProgressPollTimer = setInterval(() => {
+    void pollFeatureTrainingProgress();
+  }, 500);
+};
+
+const getStepProgressDuringTraining = (stepIndex: number, trainingPct: number) => {
+  if (stepIndex < 2) return 100;
+  const segmentSize = 100 / 3;
+  const segmentStart = (stepIndex - 2) * segmentSize;
+  const segmentEnd = segmentStart + segmentSize;
+  if (trainingPct >= segmentEnd) return 100;
+  if (trainingPct <= segmentStart) return 0;
+  return Math.round(((trainingPct - segmentStart) / segmentSize) * 100);
+};
 
 const clearFeatureFlowTimers = () => {
   featureFlowTimers.value.forEach(clearTimeout);
@@ -717,19 +782,39 @@ const sleep = (ms: number) => new Promise<void>((resolve) => {
 
 const resetFeatureFlowUI = () => {
   clearFeatureFlowTimers();
+  stopFeatureProgressPoll();
   featureFlowStep.value = 0;
   featureFlowLoading.value = false;
   featureWaitingBackend.value = false;
+  featureBackendFinished.value = false;
+  backendTrainingPercent.value = 0;
+  backendTrainingEpoch.value = 0;
+  backendTrainingTotalEpochs.value = 0;
 };
+
+const getPreTrainProgressPercent = (step: number) =>
+  Math.round(((Math.min(step, 2) + 1) / 3) * FEATURE_PRE_TRAIN_MAX);
 
 const featureFlowProgressPercent = computed(() => {
   if (featureLearningCompleted.value) return 100;
   if (!featureFlowLoading.value) return 0;
-  if (featureWaitingBackend.value) return 88;
-  const stepProgress = Math.round(((featureFlowStep.value + 1) / FEATURE_FLOW_TOTAL_STEPS) * 100);
-  return featureFlowStep.value >= FEATURE_FLOW_TOTAL_STEPS - 1
-    ? Math.min(stepProgress, 72)
-    : stepProgress;
+  if (featureBackendFinished.value) {
+    const finishIdx = Math.max(0, Math.min(2, featureFlowStep.value - 2));
+    return Math.min(100, 95 + Math.round((finishIdx / 2) * 5));
+  }
+  if (featureWaitingBackend.value) {
+    const preTrain = getPreTrainProgressPercent(featureFlowStep.value);
+    const trainPart = Math.round((backendTrainingPercent.value / 100) * FEATURE_TRAIN_SPAN);
+    return Math.min(95, preTrain + trainPart);
+  }
+  return Math.round(((featureFlowStep.value + 1) / FEATURE_FLOW_TOTAL_STEPS) * FEATURE_PRE_TRAIN_MAX);
+});
+
+const featureFlowStatusText = computed(() => {
+  if (featureWaitingBackend.value && backendTrainingTotalEpochs.value > 0) {
+    return `${selectedModel.value} 模型训练中 Epoch ${backendTrainingEpoch.value}/${backendTrainingTotalEpochs.value}`;
+  }
+  return `${selectedModel.value}模型分析脑电信号`;
 });
 
 const featureFlowCurrentStepDisplay = computed(() => {
@@ -740,9 +825,18 @@ const featureFlowCurrentStepDisplay = computed(() => {
 
 const getFeatureStepProgress = (stepIndex: number) => {
   if (featureLearningCompleted.value || featureFlowStep.value > stepIndex) return '100%';
-  if (featureWaitingBackend.value && stepIndex >= 2) return '88%';
+  if (featureWaitingBackend.value) {
+    if (stepIndex < 2) return '100%';
+    const pct = getStepProgressDuringTraining(stepIndex, backendTrainingPercent.value);
+    return `${pct}%`;
+  }
+  if (featureBackendFinished.value) {
+    if (stepIndex < 3) return '100%';
+    if (featureFlowStep.value === stepIndex) return '75%';
+    return '0%';
+  }
   if (featureFlowLoading.value && featureFlowStep.value === stepIndex) {
-    return featureFlowStep.value >= FEATURE_FLOW_TOTAL_STEPS - 1 ? '72%' : '60%';
+    return '60%';
   }
   return '0%';
 };
@@ -1168,7 +1262,11 @@ const featureLearningCompleted = ref(false); // 控制后续情绪识别是否�
 const trainedModelPath = ref('');
 const activeFeatureType = ref('de_comp_4ch_1p5s');
 const visualizationModelName = ref(DEFAULT_MODEL);
-const brainflowPollTimer = ref<ReturnType<typeof setInterval> | null>(null);
+const brainflowPollTimer = ref<ReturnType<typeof setTimeout> | null>(null);
+const brainflowPollInFlight = ref(false);
+const brainflowPollingActive = ref(false);
+const lastBrainflowSequence = ref(0);
+const BRAINFLOW_POLL_MS = 700;
 const visualizationHint = ref('训练过程分析读取最新训练日志，请点击“生成可视化分析”。');
 const metabciPreprocessInfo = ref<any>(null);
 const brainflowPredictionInfo = ref<any>(null);
@@ -1232,15 +1330,23 @@ const uploadRequest = async (options: any) => {
   }
 };
 
+const DATA_PIPELINE_NODE_COUNT = 4;
+
 const dataPreprocess = async () => {
   let processInterval: ReturnType<typeof setInterval> | null = null;
+  let buildPollTimer: ReturnType<typeof setInterval> | null = null;
   let pipelineFinished = false;
   let safetyTimer: ReturnType<typeof setTimeout> | null = null;
+  let slowHintShown = false;
 
   const clearPipelineTimer = () => {
     if (processInterval) {
       clearInterval(processInterval);
       processInterval = null;
+    }
+    if (buildPollTimer) {
+      clearInterval(buildPollTimer);
+      buildPollTimer = null;
     }
     if (safetyTimer) {
       clearTimeout(safetyTimer);
@@ -1252,7 +1358,7 @@ const dataPreprocess = async () => {
     if (pipelineFinished) return;
     pipelineFinished = true;
     clearPipelineTimer();
-    dataProcessStep.value = 3;
+    dataProcessStep.value = DATA_PIPELINE_NODE_COUNT;
     indexs.value.dataPreprocessing = 1;
     dataPreprocessLoading.value = false;
     if (options?.warn) {
@@ -1269,10 +1375,54 @@ const dataPreprocess = async () => {
         clearPipelineTimer();
         return;
       }
-      if (dataProcessStep.value < 3) {
+      if (dataProcessStep.value < DATA_PIPELINE_NODE_COUNT - 1) {
         dataProcessStep.value += 1;
       }
+    }, 1200);
+  };
+
+  const startBuildStatusPoll = () => {
+    if (buildPollTimer) return;
+    buildPollTimer = setInterval(async () => {
+      if (pipelineFinished || !dataPreprocessLoading.value) return;
+      try {
+        const resp = await api.metabciBuildStatus();
+        const buildState = resp.build_status?.state;
+        if (buildState === 'running' && dataProcessStep.value < DATA_PIPELINE_NODE_COUNT - 1) {
+          dataProcessStep.value = Math.min(
+            DATA_PIPELINE_NODE_COUNT - 1,
+            dataProcessStep.value + 1,
+          );
+        }
+      } catch {
+        // 构建状态轮询失败时忽略，由主请求或兜底定时器处理
+      }
     }, 1500);
+  };
+
+  const startSafetyWatchdog = (finishLabel: string) => {
+    safetyTimer = setTimeout(async () => {
+      if (pipelineFinished || !dataPreprocessLoading.value) return;
+      try {
+        await api.health();
+        if (!slowHintShown) {
+          slowHintShown = true;
+          ElMessage.info(`${finishLabel}：后端仍在处理，请稍候…`);
+        }
+      } catch {
+        completePipeline(finishLabel, {
+          warn: `${finishLabel}：后端无响应，已切换为演示完成。请 Ctrl+C 重启 start.py 后重试`,
+        });
+      }
+    }, 12000);
+
+    window.setTimeout(() => {
+      if (!pipelineFinished && dataPreprocessLoading.value) {
+        completePipeline(finishLabel, {
+          warn: `${finishLabel}：预处理耗时较长，已自动完成演示流程（后台任务可能仍在进行）`,
+        });
+      }
+    }, 45000);
   };
 
   const runSeedExtraTasks = () => {
@@ -1316,13 +1466,8 @@ const dataPreprocess = async () => {
     dataPreprocessLoading.value = true;
     const finishLabel = isLiveMode.value ? datasetLabel.value : 'SEED 数据集';
     startPipelineAnimation();
-    safetyTimer = setTimeout(() => {
-      if (!pipelineFinished && dataPreprocessLoading.value) {
-        completePipeline(finishLabel, {
-          warn: `${finishLabel}：预处理耗时较长，已自动完成演示流程（后台任务可能仍在进行）`,
-        });
-      }
-    }, 20000);
+    startBuildStatusPoll();
+    startSafetyWatchdog(finishLabel);
 
     console.log('开始 MetaBCI/brainda 数据处理，生成拓扑图...');
     console.log('选中的特征类型:', selectedFeature.value);
@@ -1410,19 +1555,26 @@ const dataPreprocess = async () => {
 };
 
 const stopBrainflowPolling = async () => {
+  brainflowPollingActive.value = false;
   if (brainflowPollTimer.value) {
-    clearInterval(brainflowPollTimer.value);
+    clearTimeout(brainflowPollTimer.value);
     brainflowPollTimer.value = null;
   }
+  brainflowPollInFlight.value = false;
 };
 
 const applyBrainflowStatus = (status: any) => {
   const prediction = status?.latest_prediction || {};
   const emotionResults = prediction.emotion_results || status?.emotion_results;
-  const hasRealResults = Boolean(
-    emotionResults
-    && Number(prediction.sequence || status?.sequence || 0) > 0
-  );
+  const sequence = Number(prediction.sequence || status?.sequence || 0);
+  const hasRealResults = Boolean(emotionResults && sequence > 0);
+
+  if (hasRealResults && sequence === lastBrainflowSequence.value) {
+    return;
+  }
+  if (hasRealResults) {
+    lastBrainflowSequence.value = sequence;
+  }
 
   brainflowPredictionInfo.value = {
     module: 'brainflow',
@@ -1443,6 +1595,39 @@ const applyBrainflowStatus = (status: any) => {
     emotionResult.value = prediction.primary_emotion || emotionResult.value;
     generateProbabilities();
   }
+};
+
+const scheduleBrainflowPoll = () => {
+  if (!brainflowPollingActive.value) return;
+  if (brainflowPollTimer.value) {
+    clearTimeout(brainflowPollTimer.value);
+  }
+  brainflowPollTimer.value = setTimeout(async () => {
+    if (!brainflowPollingActive.value) return;
+    if (brainflowPollInFlight.value) {
+      scheduleBrainflowPoll();
+      return;
+    }
+    brainflowPollInFlight.value = true;
+    try {
+      const status = await api.brainflowStatus(true);
+      applyBrainflowStatus(status);
+    } catch (error) {
+      console.warn('brainflow 状态轮询失败:', error);
+    } finally {
+      brainflowPollInFlight.value = false;
+      if (brainflowPollingActive.value) {
+        scheduleBrainflowPoll();
+      }
+    }
+  }, BRAINFLOW_POLL_MS);
+};
+
+const startBrainflowPolling = () => {
+  stopBrainflowPolling();
+  lastBrainflowSequence.value = 0;
+  brainflowPollingActive.value = true;
+  scheduleBrainflowPoll();
 };
 
 const modelSelection = async () => {
@@ -1473,18 +1658,11 @@ const modelSelection = async () => {
       acquisition_mode: acquisitionMode.value,
     });
 
-    await new Promise(resolve => setTimeout(resolve, 800));
-    const initialStatus = await api.brainflowStatus();
+    await new Promise(resolve => setTimeout(resolve, 400));
+    const initialStatus = await api.brainflowStatus(true);
     applyBrainflowStatus(initialStatus);
 
-    brainflowPollTimer.value = setInterval(async () => {
-      try {
-        const status = await api.brainflowStatus();
-        applyBrainflowStatus(status);
-      } catch (error) {
-        console.warn('brainflow 状态轮询失败:', error);
-      }
-    }, 500);
+    startBrainflowPolling();
 
     modelSelectionLoading.value = false;
 
@@ -1541,8 +1719,13 @@ const startFeatureFlow = async () => {
     brainflowPredictionInfo.value = null;
     await stopBrainflowPolling();
     clearFeatureFlowTimers();
+    stopFeatureProgressPoll();
     featureFlowStep.value = 0;
     featureWaitingBackend.value = false;
+    featureBackendFinished.value = false;
+    backendTrainingPercent.value = 0;
+    backendTrainingEpoch.value = 0;
+    backendTrainingTotalEpochs.value = 0;
 
     if (isLiveMode.value) {
       const modelsResp = await api.listModels();
@@ -1579,10 +1762,15 @@ const startFeatureFlow = async () => {
       if (!await advanceFeatureFlowSteps(2, STEP_MS)) return;
       console.log(`进入步骤: ${flowStepNames[2]?.title}`);
       featureWaitingBackend.value = true;
+      backendTrainingPercent.value = 0;
+      startFeatureProgressPoll();
     })();
 
     const result = await backendPromise;
+    stopFeatureProgressPoll();
     featureWaitingBackend.value = false;
+    featureBackendFinished.value = true;
+    backendTrainingPercent.value = 100;
 
     if (!result) {
       resetFeatureFlowUI();

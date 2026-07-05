@@ -80,6 +80,20 @@ def get_brainflow_runtime_status() -> Dict[str, Any]:
     }
 
 
+_RUNTIME_STATUS_CACHE: Dict[str, Any] = {"ts": 0.0, "value": {}}
+
+
+def get_brainflow_runtime_status_cached(ttl: float = 5.0) -> Dict[str, Any]:
+    now = time.time()
+    cached = _RUNTIME_STATUS_CACHE
+    if cached["value"] and now - float(cached["ts"]) < ttl:
+        return dict(cached["value"])
+    value = get_brainflow_runtime_status()
+    cached["ts"] = now
+    cached["value"] = value
+    return dict(value)
+
+
 def _probabilities_from_label(label: int, confidence: float = 86.0) -> Dict[str, float]:
     primary = LABEL_TO_NAME.get(int(label), "neutral")
     rest = (100.0 - confidence) / 2.0
@@ -451,26 +465,38 @@ class BrainflowOnlinePipeline:
             self._state["stopped_at"] = datetime.now().isoformat()
         return self.status()
 
-    def status(self) -> Dict[str, Any]:
-        runtime = get_brainflow_runtime_status()
+    def status(self, lite: bool = False) -> Dict[str, Any]:
+        runtime = None if lite else get_brainflow_runtime_status_cached()
         with self._lock:
             state = dict(self._state)
         latest = None
         if self._shared_predictions is not None:
-            latest = dict(self._shared_predictions)
-            seq = int(latest.get("sequence", 0) or 0)
+            seq = int(self._shared_predictions.get("sequence", 0) or 0)
+            emotion_results = self._shared_predictions.get("emotion_results")
             state["sequence"] = seq
-            if seq > 0 or latest.get("emotion_results"):
-                pending_shape = latest.get("pending_segment_shape") or []
-                if not latest.get("segment_shape") and pending_shape:
-                    latest["segment_shape"] = pending_shape
-                    latest["input_shape"] = pending_shape
+            if seq > 0 or emotion_results:
+                pending_shape = self._shared_predictions.get("pending_segment_shape") or []
+                segment_shape = self._shared_predictions.get("segment_shape") or pending_shape
+                latest = {
+                    "sequence": seq,
+                    "sample_index": self._shared_predictions.get("sample_index"),
+                    "subject_id": self._shared_predictions.get("subject_id"),
+                    "session_id": self._shared_predictions.get("session_id"),
+                    "trial_id": self._shared_predictions.get("trial_id"),
+                    "emotion_results": emotion_results,
+                    "primary_emotion": self._shared_predictions.get("primary_emotion"),
+                    "confidence": self._shared_predictions.get("confidence"),
+                    "inference_mode": self._shared_predictions.get("inference_mode"),
+                    "segment_shape": segment_shape,
+                    "input_shape": self._shared_predictions.get("input_shape") or segment_shape,
+                    "latency_ms": self._shared_predictions.get("latency_ms"),
+                    "timestamp": self._shared_predictions.get("timestamp"),
+                }
                 state["latest_prediction"] = latest
             elif state.get("running"):
-                pending_shape = latest.get("pending_segment_shape") or state.get("data_shape") or []
+                pending_shape = self._shared_predictions.get("pending_segment_shape") or state.get("data_shape") or []
                 state["latest_prediction"] = {
-                    **latest,
-                    "inference_mode": latest.get("inference_mode") or "waiting",
+                    "inference_mode": self._shared_predictions.get("inference_mode") or "waiting",
                     "primary_emotion": "neutral",
                     "emotion_results": {"positive": 0, "neutral": 100, "negative": 0},
                     "confidence": 0,
@@ -483,12 +509,13 @@ class BrainflowOnlinePipeline:
                 "success": True,
                 "message": "brainflow 在线情绪推理状态",
                 "module": "brainflow",
-                "module_available": runtime["process_worker_available"],
+                "module_available": runtime["process_worker_available"] if runtime else True,
                 "fallback_used": not model_loaded,
-                "brainflow_runtime": runtime,
                 "timestamp": datetime.now().isoformat(),
             }
         )
+        if runtime is not None:
+            state["brainflow_runtime"] = runtime
         return state
 
     def _feed_segments(
@@ -522,34 +549,41 @@ class BrainflowOnlinePipeline:
             if self._shared_predictions is not None:
                 from metabci_integration.atgrnet_online import decode_replay_sample_index
 
-                pending_shape = list(sample.shape)
-                self._shared_predictions["pending_segment_shape"] = pending_shape
-                self._shared_predictions["segment_shape"] = pending_shape
-                location = decode_replay_sample_index(
-                    idx,
-                    n_sessions=n_sessions,
-                    n_trials=n_trials,
-                )
-                self._shared_predictions["sample_index"] = idx
-                self._shared_predictions["subject_id"] = location["subject_id"]
-                self._shared_predictions["session_id"] = location["session_id"]
-                self._shared_predictions["trial_id"] = location["trial_id"]
-                self._shared_predictions["replay_scope"] = replay_meta.get("replay_scope", "")
-                if device_source.startswith("neuroscan"):
-                    raw_cap, _picked = simulate_neuroscan_window_from_features(
-                        sample.detach().cpu().numpy()
-                        if hasattr(sample, "detach")
-                        else np.asarray(sample),
-                        window_samples=window_samples,
+                try:
+                    pending_shape = list(sample.shape)
+                    self._shared_predictions["pending_segment_shape"] = pending_shape
+                    self._shared_predictions["segment_shape"] = pending_shape
+                    location = decode_replay_sample_index(
+                        idx,
+                        n_sessions=n_sessions,
+                        n_trials=n_trials,
                     )
-                    frame_meta = build_device_frame_metadata(
-                        device_source=device_source,
-                        lsl_fallback=bool(device_meta.get("lsl_fallback")),
-                        lsl_message=str(device_meta.get("lsl_message", "")),
-                        raw_cap=raw_cap,
-                    )
-                    for key, value in frame_meta.items():
-                        self._shared_predictions[key] = value
+                    self._shared_predictions["sample_index"] = idx
+                    self._shared_predictions["subject_id"] = location["subject_id"]
+                    self._shared_predictions["session_id"] = location["session_id"]
+                    self._shared_predictions["trial_id"] = location["trial_id"]
+                    self._shared_predictions["replay_scope"] = replay_meta.get("replay_scope", "")
+                    if device_source.startswith("neuroscan"):
+                        raw_cap, _picked = simulate_neuroscan_window_from_features(
+                            sample.detach().cpu().numpy()
+                            if hasattr(sample, "detach")
+                            else np.asarray(sample),
+                            window_samples=window_samples,
+                        )
+                        frame_meta = build_device_frame_metadata(
+                            device_source=device_source,
+                            lsl_fallback=bool(device_meta.get("lsl_fallback")),
+                            lsl_message=str(device_meta.get("lsl_message", "")),
+                            raw_cap=raw_cap,
+                        )
+                        for key, value in frame_meta.items():
+                            self._shared_predictions[key] = value
+                except BrokenPipeError:
+                    bf_logger.warning("brainflow shared state unavailable (manager closed); stopping feed")
+                    break
+                except (ConnectionError, OSError) as exc:
+                    bf_logger.warning("brainflow shared state write failed: %s", exc)
+                    break
 
             if model_loaded and use_model_tensors:
                 payload = sample.detach().cpu().numpy()
@@ -569,7 +603,7 @@ class BrainflowOnlinePipeline:
                 self._worker.put(payload.tolist())
 
             sequence += 1
-            time.sleep(0.35)
+            time.sleep(0.28)
 
     def _feed_live(
         self,

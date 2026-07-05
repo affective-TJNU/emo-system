@@ -149,18 +149,19 @@ export interface TrainingEpochStats {
 // API接口定义
 export const api = {
   // 健康检查
-  health: () => request<{status: string; timestamp: string; service: string}>('/api/health'),
+  health: () =>
+    request<{ status: string; timestamp?: string; service?: string }>('/api/health', {}, 4000),
 
   systemMetrics: () =>
     request<SystemMetricsPayload>('/api/system-metrics', { method: 'GET' }),
 
   trainingEpochStats: () =>
     request<TrainingEpochStats>('/api/training-epoch-stats', { method: 'GET' }),
-  
+
   // 文件管理
   uploadFile: (file: File) => uploadFile(file),
   listFiles: () => request<{message: string; files: Array<{filename: string; size: number; modified: string}>}>('/api/files'),
-  
+
   // 数据处理（缺 DE 特征时会从 Preprocessed_EEG 自动构建，耗时较长）
   dataPreprocessing: (filename: string, extra: Record<string, unknown> = {}) =>
     request<{
@@ -190,8 +191,21 @@ export const api = {
           ...extra,
         }),
       },
-      600_000,
+      120_000,
     ),
+
+  metabciBuildStatus: () =>
+    request<{
+      success: boolean;
+      message: string;
+      build_status: {
+        state: 'idle' | 'running' | 'completed' | 'failed';
+        message?: string;
+        started_at?: string | null;
+        finished_at?: string | null;
+        error?: string | null;
+      };
+    }>('/api/metabci/brainda/build-status', {}, 4000),
 
   metabciStatus: () =>
     request<{
@@ -230,8 +244,12 @@ export const api = {
       body: JSON.stringify(payload),
     }),
 
-  brainflowStatus: () =>
-    request<Record<string, any>>('/api/metabci/brainflow/status'),
+  brainflowStatus: (lite = true) =>
+    request<Record<string, any>>(
+      `/api/metabci/brainflow/status${lite ? '?lite=1' : ''}`,
+      {},
+      3000,
+    ),
 
   brainflowStop: () =>
     request<Record<string, any>>('/api/metabci/brainflow/stop', {
@@ -293,6 +311,23 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ filename, model, feature_type: featureType }),
     }, 960000),
+
+  featureLearningProgress: () =>
+    request<{
+      success: boolean;
+      message: string;
+      progress: {
+        state: 'idle' | 'running' | 'completed' | 'failed';
+        model?: string;
+        epoch: number;
+        total_epochs: number;
+        accuracy: number;
+        loss: number;
+        percent: number;
+        message: string;
+        error?: string | null;
+      };
+    }>('/api/feature-learning/progress'),
 
   // 获取可用模型列表
   listModels: () =>

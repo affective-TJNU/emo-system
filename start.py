@@ -151,7 +151,9 @@ def run_backend():
     try:
         os.chdir(backend_dir)
         print("[后端] 启动Flask服务...")
-        subprocess.run([sys.executable, "run.py"], check=True)
+        env = os.environ.copy()
+        env.setdefault('FLASK_USE_RELOADER', '0')
+        subprocess.run([sys.executable, "run.py"], check=True, env=env)
     except KeyboardInterrupt:
         print("\n[后端] 服务已停止")
     except Exception as e:
@@ -159,8 +161,8 @@ def run_backend():
     finally:
         os.chdir(original_dir)
 
-def run_frontend():
-    """运行前端服务"""
+def run_frontend() -> bool:
+    """运行前端服务，失败时返回 False 而不抛出异常。"""
     try:
         print("[前端] 启动Vite开发服务器...")
         is_windows = platform.system() == 'Windows'
@@ -168,10 +170,18 @@ def run_frontend():
             subprocess.run(["npm", "run", "dev"], check=True, shell=True)
         else:
             subprocess.run(["npm", "run", "dev"], check=True)
+        return True
     except KeyboardInterrupt:
         print("\n[前端] 服务已停止")
+        raise
+    except subprocess.CalledProcessError as e:
+        print(f"[前端] 服务启动失败: {e}")
+        if e.returncode == 228 or 'ENOSPC' in str(e):
+            print("[提示] 磁盘空间不足 (ENOSPC)。可清理 workspace 下旧训练目录/压缩包，或仅使用后端 API。")
+        return False
     except Exception as e:
         print(f"[前端] 服务启动失败: {e}")
+        return False
 
 def main():
     """主函数"""
@@ -226,8 +236,8 @@ def main():
         print("=" * 60)
         print()
         
-        # 启动后端服务（在后台线程中）
-        backend_thread = threading.Thread(target=run_backend, daemon=True)
+        # 启动后端服务（在后台线程中；非 daemon，前端失败时后端仍可继续）
+        backend_thread = threading.Thread(target=run_backend, daemon=False)
         backend_thread.start()
         
         # 等待后端启动
@@ -235,7 +245,14 @@ def main():
         time.sleep(3)
         
         # 启动前端服务（主线程）
-        run_frontend()
+        if not run_frontend():
+            print("\n[提示] 前端未启动，后端仍在运行: http://localhost:{0}".format(BACKEND_PORT))
+            print("[提示] 释放磁盘空间后重新运行 start.py 以启动前端。")
+            try:
+                backend_thread.join()
+            except KeyboardInterrupt:
+                print("\n[后端] 服务已停止")
+            return
     else:
         # 仅启动后端
         print("\n" + "=" * 60)

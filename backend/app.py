@@ -4,6 +4,8 @@ import os
 import json
 import time
 import re
+import select
+import subprocess
 from datetime import datetime
 import numpy as np
 import logging
@@ -259,7 +261,8 @@ def metabci_brainflow_start():
 @app.route('/api/metabci/brainflow/status', methods=['GET'])
 def metabci_brainflow_status():
     """获取在线情绪推理状态。"""
-    return jsonify(online_worker.status())
+    lite = request.args.get('lite', '1').lower() in {'1', 'true', 'yes'}
+    return jsonify(online_worker.status(lite=lite))
 
 @app.route('/api/metabci/brainflow/stop', methods=['POST'])
 def metabci_brainflow_stop():
@@ -788,6 +791,21 @@ def list_available_models():
         logger.error(f"获取模型列表失败: {str(e)}")
         return jsonify({'error': f'获取模型列表失败: {str(e)}'}), 500
 
+@app.route('/api/feature-learning/progress', methods=['GET'])
+def feature_learning_progress():
+    """查询特征学习训练进度（训练过程中可轮询）。"""
+    from metabci_integration.training_progress import get_training_progress
+
+    progress = get_training_progress()
+    return jsonify(
+        {
+            "success": True,
+            "progress": progress,
+            "message": progress.get("message", ""),
+        }
+    )
+
+
 @app.route('/api/feature-learning', methods=['POST'])
 def feature_learning():
     """特征提取学习端点 - 调用AGN.py程序"""
@@ -806,10 +824,14 @@ def feature_learning():
             }), 400
         
         # 导入必要的模块
-        import subprocess
         import sys
-        import os
         from pathlib import Path
+        from metabci_integration.training_progress import (
+            mark_training_completed,
+            mark_training_failed,
+            parse_training_output_line,
+            reset_training_progress,
+        )
         
         # 获取当前工作目录
         current_dir = os.getcwd()
@@ -889,6 +911,7 @@ def feature_learning():
             env = os.environ.copy()
             env['PYTHONPATH'] = str(backend_dir)
             env['PYTHONIOENCODING'] = 'utf-8'  # 确保Python输出使用UTF-8编码
+            env['PYTHONUNBUFFERED'] = '1'
             
             # 确保AGN.py文件存在
             agn_file = backend_dir / 'AGN.py'
@@ -902,21 +925,70 @@ def feature_learning():
                 train_timeout,
                 backend_dir,
             )
-            
-            result = subprocess.run(
+
+            reset_training_progress(model_name, int(train_cfg['epochs']))
+
+            process = subprocess.Popen(
                 agn_args,
-                capture_output=True,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
                 text=True,
                 encoding='utf-8',
-                errors='replace',  # Replace undecodable characters with replacement character
-                timeout=train_timeout,
+                errors='replace',
                 env=env,
-                cwd=str(backend_dir)
+                cwd=str(backend_dir),
+                bufsize=1,
             )
-            
-            output_lines = (result.stdout or '').split('\n')
-            stderr_text = result.stderr or ''
+
+            output_lines = []
+            stderr_text = ''
+            started_at = time.time()
+
+            while True:
+                elapsed = time.time() - started_at
+                if elapsed > train_timeout:
+                    process.kill()
+                    try:
+                        process.wait(timeout=5)
+                    except subprocess.TimeoutExpired:
+                        process.terminate()
+                    mark_training_failed(f'训练超时（上限 {train_timeout // 60} 分钟）')
+                    raise subprocess.TimeoutExpired(agn_args, train_timeout)
+
+                if process.poll() is not None:
+                    remaining_stdout = process.stdout.read() if process.stdout else ''
+                    if remaining_stdout:
+                        for line in remaining_stdout.splitlines():
+                            output_lines.append(line)
+                            parse_training_output_line(line)
+                    break
+
+                assert process.stdout is not None
+                ready, _, _ = select.select([process.stdout], [], [], 0.3)
+                if not ready:
+                    continue
+
+                line = process.stdout.readline()
+                if not line:
+                    continue
+                line = line.rstrip('\n')
+                output_lines.append(line)
+                parse_training_output_line(line)
+
+            stderr_text = process.stderr.read() if process.stderr else ''
+            returncode = process.wait()
             combined_output = '\n'.join(output_lines)
+            result = subprocess.CompletedProcess(
+                args=agn_args,
+                returncode=returncode,
+                stdout=combined_output,
+                stderr=stderr_text,
+            )
+
+            if returncode != 0 and 'Validation Results' not in combined_output:
+                mark_training_failed(stderr_text or f'AGN.py 退出码 {returncode}')
+            else:
+                mark_training_completed()
             accuracy = 0.0
             loss = 0.15
 

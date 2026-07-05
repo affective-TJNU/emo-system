@@ -170,20 +170,32 @@ class _FallbackOnlineWorker:
             self._state["stopped_at"] = datetime.now().isoformat()
         return self.status()
 
-    def status(self) -> Dict[str, Any]:
-        status = get_metabci_status()
+    def status(self, lite: bool = False) -> Dict[str, Any]:
         with self._lock:
             state = dict(self._state)
-        state.update(
-            {
-                "success": True,
-                "message": "brainflow 在线情绪推理状态",
-                "module": "brainflow",
-                "module_available": bool(status["modules"]["brainflow"]),
-                "fallback_used": True,
-                "timestamp": datetime.now().isoformat(),
-            }
-        )
+        if not lite:
+            status = get_metabci_status()
+            state.update(
+                {
+                    "success": True,
+                    "message": "brainflow 在线情绪推理状态",
+                    "module": "brainflow",
+                    "module_available": bool(status["modules"]["brainflow"]),
+                    "fallback_used": True,
+                    "timestamp": datetime.now().isoformat(),
+                }
+            )
+        else:
+            state.update(
+                {
+                    "success": True,
+                    "message": "brainflow 在线情绪推理状态",
+                    "module": "brainflow",
+                    "module_available": True,
+                    "fallback_used": True,
+                    "timestamp": datetime.now().isoformat(),
+                }
+            )
         return state
 
     def _run(self) -> None:
@@ -213,7 +225,7 @@ class _FallbackOnlineWorker:
             with self._lock:
                 self._state["sequence"] = sequence + 1
                 self._state["latest_prediction"] = prediction
-            time.sleep(0.35)
+            time.sleep(0.28)
 
 
 class OnlineEmotionWorker:
@@ -381,10 +393,10 @@ class OnlineEmotionWorker:
         _log_brainflow_stop("fallback", status)
         return result
 
-    def status(self) -> Dict[str, Any]:
+    def status(self, lite: bool = False) -> Dict[str, Any]:
         if self._mode == "brainflow" and self._brainflow is not None:
-            return self._brainflow.status()
-        return self._fallback.status()
+            return self._brainflow.status(lite=lite)
+        return self._fallback.status(lite=lite)
 
 
 online_worker = OnlineEmotionWorker()
