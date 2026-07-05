@@ -1,0 +1,51 @@
+2026-07-05 15:50:28,660 - AGN 启动 | train_mode=debug | model=DGConformer | feature=de_comp_4ch_1p5s | save_path=../backend/seed/20260705_155028
+2026-07-05 15:50:28,669 - brainda加载SEED完成: {'loader': 'brainda_seed_feature_tensor_loader', 'brainda_available': True, 'brainda_message': 'metabci.brainda available', 'dataset': 'SEED', 'feature_type': 'de_comp_4ch_1p5s', 'data_file': 'seed/de_comp_4ch_1p5s/data.pt', 'label_file': 'seed/de_comp_4ch_1p5s/label.pt', 'data_shape': [15, 3, 15, 4, 176, 5], 'label_shape': [15, 3, 15], 'note': 'SEED has been preprocessed into 4-channel 1.5s DE tensors; brainda wraps the dataset loading boundary.'}
+2026-07-05 15:50:29,416 - brainda LOSO划分完成: {'splitter': 'EnhancedLeaveOneGroupOut', 'brainda_api': 'metabci.brainda.algorithms.utils.model_selection.EnhancedLeaveOneGroupOut', 'strategy': 'LOSO', 'brainda_available': True, 'brainda_message': 'metabci.brainda imported', 'subject_count': 15, 'held_out_subject': 0, 'train_subjects': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], 'test_subjects': [0], 'note': 'LOSO subject indices are generated through brainda cross-validation API when available.'}
+2026-07-05 15:50:29,490 - features length: 176, channels nums: 4
+2026-07-05 15:50:30,757 - ===== 训练开始 | model=DGConformer | feature=de_comp_4ch_1p5s | split=loso | epochs=40 | device=cuda:0 | save_path=../backend/seed/20260705_155028 =====
+2026-07-05 15:50:30,757 - 训练超参详情: Namespace(epochs=40, batch_size=8, nclass=3, gpu=0, device='cuda:0', dropout=0.1, lr=0.0003, k=10, seed=3364, train_mode='debug', model='DGConformer', save_tsne_cm=1, save_model=1, save_path='../backend/seed/20260705_155028', have_domain=False, bands=5, dataset='seed', feature_type='de_comp_4ch_1p5s', label_type='label', channels_num=4, feature_len=176, raw_len=300, session=0, loss2=0.0001, loss1=5e-06, split_method='loso', cur_sub_index=0, cur_session_index=0, cur_exp_index=0, clip_length=1, k_fold_nums=10, graph_out=128, attention_out=256, spp=True, num_levels=3, kadj=3, se_squeeze_ratio=4, graph_readout_dim=256, domain_class=15, adj_num=5, windows_num=12, tcn_hidden=30, tcn_layers=3, pooling_size=1, grl_alpha=1.0, rsr=1, k_ratio=6, loss_beta=1.0, eegmatch_use_std=0, eegmatch_hidden_1=128, eegmatch_hidden_2=256, config_path='global.config')
+2026-07-05 15:50:33,845 - Validation Results [DGConformer] - Epoch: 0 acc: 0.3250 loss: 6.8320
+2026-07-05 15:50:35,803 - Validation Results [DGConformer] - Epoch: 1 acc: 0.4500 loss: 6.2151
+2026-07-05 15:50:37,730 - Validation Results [DGConformer] - Epoch: 2 acc: 0.4750 loss: 5.5264
+2026-07-05 15:50:39,659 - Validation Results [DGConformer] - Epoch: 3 acc: 0.3000 loss: 5.7032
+2026-07-05 15:50:41,727 - Validation Results [DGConformer] - Epoch: 4 acc: 0.4500 loss: 4.5682
+2026-07-05 15:50:43,749 - Validation Results [DGConformer] - Epoch: 5 acc: 0.6500 loss: 4.0875
+2026-07-05 15:50:46,490 - Validation Results [DGConformer] - Epoch: 6 acc: 0.7250 loss: 3.2710
+2026-07-05 15:50:48,899 - Validation Results [DGConformer] - Epoch: 7 acc: 0.7250 loss: 3.1826
+2026-07-05 15:50:50,507 - Validation Results [DGConformer] - Epoch: 8 acc: 0.8000 loss: 2.8876
+2026-07-05 15:50:51,594 - Validation Results [DGConformer] - Epoch: 9 acc: 0.7250 loss: 2.8071
+2026-07-05 15:50:52,665 - Validation Results [DGConformer] - Epoch: 10 acc: 0.7500 loss: 2.8655
+2026-07-05 15:50:53,796 - Validation Results [DGConformer] - Epoch: 11 acc: 0.7250 loss: 2.7792
+2026-07-05 15:50:54,945 - Validation Results [DGConformer] - Epoch: 12 acc: 0.8000 loss: 2.3799
+2026-07-05 15:50:56,094 - Validation Results [DGConformer] - Epoch: 13 acc: 0.7750 loss: 2.4482
+2026-07-05 15:50:58,091 - Validation Results [DGConformer] - Epoch: 14 acc: 0.7750 loss: 2.4140
+2026-07-05 15:51:00,315 - Validation Results [DGConformer] - Epoch: 15 acc: 0.7500 loss: 2.2657
+2026-07-05 15:51:02,714 - Validation Results [DGConformer] - Epoch: 16 acc: 0.7000 loss: 2.4895
+2026-07-05 15:51:04,872 - Validation Results [DGConformer] - Epoch: 17 acc: 0.8000 loss: 2.1727
+2026-07-05 15:51:07,094 - Validation Results [DGConformer] - Epoch: 18 acc: 0.7750 loss: 2.0322
+2026-07-05 15:51:09,260 - Validation Results [DGConformer] - Epoch: 19 acc: 0.8000 loss: 2.0148
+2026-07-05 15:51:11,861 - Validation Results [DGConformer] - Epoch: 20 acc: 0.7500 loss: 2.1524
+2026-07-05 15:51:14,792 - Validation Results [DGConformer] - Epoch: 21 acc: 0.7750 loss: 2.1941
+2026-07-05 15:51:16,881 - Validation Results [DGConformer] - Epoch: 22 acc: 0.7500 loss: 2.0178
+2026-07-05 15:51:18,894 - Validation Results [DGConformer] - Epoch: 23 acc: 0.7000 loss: 2.4022
+2026-07-05 15:51:20,971 - Validation Results [DGConformer] - Epoch: 24 acc: 0.7500 loss: 2.1370
+2026-07-05 15:51:23,136 - Validation Results [DGConformer] - Epoch: 25 acc: 0.8250 loss: 2.0999
+2026-07-05 15:51:25,149 - Validation Results [DGConformer] - Epoch: 26 acc: 0.7500 loss: 1.9279
+2026-07-05 15:51:27,149 - Validation Results [DGConformer] - Epoch: 27 acc: 0.7250 loss: 2.1253
+2026-07-05 15:51:29,091 - Validation Results [DGConformer] - Epoch: 28 acc: 0.8000 loss: 1.9123
+2026-07-05 15:51:31,076 - Validation Results [DGConformer] - Epoch: 29 acc: 0.7750 loss: 1.8307
+2026-07-05 15:51:33,074 - Validation Results [DGConformer] - Epoch: 30 acc: 0.7750 loss: 1.8904
+2026-07-05 15:51:35,056 - Validation Results [DGConformer] - Epoch: 31 acc: 0.7750 loss: 2.1222
+2026-07-05 15:51:37,052 - Validation Results [DGConformer] - Epoch: 32 acc: 0.7250 loss: 1.8242
+2026-07-05 15:51:39,090 - Validation Results [DGConformer] - Epoch: 33 acc: 0.7000 loss: 2.2510
+2026-07-05 15:51:41,072 - Validation Results [DGConformer] - Epoch: 34 acc: 0.7750 loss: 2.2159
+2026-07-05 15:51:43,981 - Validation Results [DGConformer] - Epoch: 35 acc: 0.8500 loss: 1.4891
+2026-07-05 15:51:45,984 - Validation Results [DGConformer] - Epoch: 36 acc: 0.8000 loss: 1.7902
+2026-07-05 15:51:48,100 - Validation Results [DGConformer] - Epoch: 37 acc: 0.7750 loss: 1.9189
+2026-07-05 15:51:50,304 - Validation Results [DGConformer] - Epoch: 38 acc: 0.7750 loss: 1.9201
+2026-07-05 15:51:52,522 - Validation Results [DGConformer] - Epoch: 39 acc: 0.6250 loss: 2.4315
+2026-07-05 15:51:52,532 - 模型保存失败（训练已完成）: [enforce fail at inline_container.cc:664] . unexpected pos 487360 vs 487248
+2026-07-05 15:51:52,804 - t-SNE 结果保存失败（训练已完成）: [enforce fail at inline_container.cc:664] . unexpected pos 1024 vs 918
+2026-07-05 15:51:52,818 - [DGConformer] max acc=0.85 std=12.934127449989319
+2026-07-05 15:51:52,819 - [DGConformer] debug is done, acc= 0.8500 std= 12.9341
+2026-07-05 15:51:52,840 - 该程序运行时间：1分24秒

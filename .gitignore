@@ -7,9 +7,17 @@ __pycache__/
 
 # 大数据不上传
 backend/seed/Preprocessed_EEG/
-backend/seed/2026*/
 backend/uploads/
 *.pth
+**/tsne_class/**
+**/tsne_domain/**
+**/confusion/**
+
+# 训练目录：仅保留 log 与 meta，排除权重与大体积可视化
+backend/seed/2026*/
+!backend/seed/2026*/
+!backend/seed/2026*/log.log
+!backend/seed/2026*/training_meta.json
 
 # 保留约 9MB 预计算特征，评委可直接跑
 !backend/seed/de_comp_4ch_1p5s/

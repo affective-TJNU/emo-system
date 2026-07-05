@@ -1,0 +1,52 @@
+2026-07-05 15:48:15,513 - AGN 启动 | train_mode=debug | model=CADD_DCCNN | feature=de_comp_4ch_1p5s | save_path=../backend/seed/20260705_154815
+2026-07-05 15:48:15,523 - brainda加载SEED完成: {'loader': 'brainda_seed_feature_tensor_loader', 'brainda_available': True, 'brainda_message': 'metabci.brainda available', 'dataset': 'SEED', 'feature_type': 'de_comp_4ch_1p5s', 'data_file': 'seed/de_comp_4ch_1p5s/data.pt', 'label_file': 'seed/de_comp_4ch_1p5s/label.pt', 'data_shape': [15, 3, 15, 4, 176, 5], 'label_shape': [15, 3, 15], 'note': 'SEED has been preprocessed into 4-channel 1.5s DE tensors; brainda wraps the dataset loading boundary.'}
+2026-07-05 15:48:16,181 - brainda LOSO划分完成: {'splitter': 'EnhancedLeaveOneGroupOut', 'brainda_api': 'metabci.brainda.algorithms.utils.model_selection.EnhancedLeaveOneGroupOut', 'strategy': 'LOSO', 'brainda_available': True, 'brainda_message': 'metabci.brainda imported', 'subject_count': 15, 'held_out_subject': 0, 'train_subjects': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], 'test_subjects': [0], 'note': 'LOSO subject indices are generated through brainda cross-validation API when available.'}
+2026-07-05 15:48:16,221 - features length: 176, channels nums: 4
+2026-07-05 15:48:17,050 - ===== 训练开始 | model=CADD_DCCNN | feature=de_comp_4ch_1p5s | split=loso | epochs=40 | device=cuda:0 | save_path=../backend/seed/20260705_154815 =====
+2026-07-05 15:48:17,050 - 训练超参详情: Namespace(epochs=40, batch_size=8, nclass=3, gpu=0, device='cuda:0', dropout=0.5, lr=0.0005, k=10, seed=3364, train_mode='debug', model='CADD_DCCNN', save_tsne_cm=1, save_model=1, save_path='../backend/seed/20260705_154815', have_domain=False, bands=5, dataset='seed', feature_type='de_comp_4ch_1p5s', label_type='label', channels_num=4, feature_len=176, raw_len=300, session=0, loss2=0.0001, loss1=5e-06, split_method='loso', cur_sub_index=0, cur_session_index=0, cur_exp_index=0, clip_length=1, k_fold_nums=10, graph_out=128, attention_out=256, spp=True, num_levels=3, kadj=3, se_squeeze_ratio=4, graph_readout_dim=256, domain_class=15, adj_num=5, windows_num=12, tcn_hidden=30, tcn_layers=3, pooling_size=1, grl_alpha=1.0, rsr=1, k_ratio=6, loss_beta=1.0, eegmatch_use_std=0, eegmatch_hidden_1=128, eegmatch_hidden_2=256, config_path='global.config')
+2026-07-05 15:48:18,142 - Validation Results [CADD_DCCNN] - Epoch: 0 acc: 0.3500 loss: 1.5695
+2026-07-05 15:48:18,847 - Validation Results [CADD_DCCNN] - Epoch: 1 acc: 0.3500 loss: 1.3102
+2026-07-05 15:48:19,568 - Validation Results [CADD_DCCNN] - Epoch: 2 acc: 0.4500 loss: 1.2432
+2026-07-05 15:48:20,245 - Validation Results [CADD_DCCNN] - Epoch: 3 acc: 0.6000 loss: 1.1324
+2026-07-05 15:48:20,989 - Validation Results [CADD_DCCNN] - Epoch: 4 acc: 0.6250 loss: 1.0929
+2026-07-05 15:48:21,777 - Validation Results [CADD_DCCNN] - Epoch: 5 acc: 0.7250 loss: 1.0495
+2026-07-05 15:48:22,526 - Validation Results [CADD_DCCNN] - Epoch: 6 acc: 0.6750 loss: 1.0456
+2026-07-05 15:48:23,203 - Validation Results [CADD_DCCNN] - Epoch: 7 acc: 0.7000 loss: 1.0155
+2026-07-05 15:48:23,807 - Validation Results [CADD_DCCNN] - Epoch: 8 acc: 0.6750 loss: 1.0393
+2026-07-05 15:48:24,374 - Validation Results [CADD_DCCNN] - Epoch: 9 acc: 0.6250 loss: 1.0781
+2026-07-05 15:48:24,928 - Validation Results [CADD_DCCNN] - Epoch: 10 acc: 0.6750 loss: 1.0371
+2026-07-05 15:48:25,478 - Validation Results [CADD_DCCNN] - Epoch: 11 acc: 0.6500 loss: 1.0661
+2026-07-05 15:48:26,014 - Validation Results [CADD_DCCNN] - Epoch: 12 acc: 0.6500 loss: 1.0547
+2026-07-05 15:48:26,639 - Validation Results [CADD_DCCNN] - Epoch: 13 acc: 0.7000 loss: 1.0068
+2026-07-05 15:48:27,265 - Validation Results [CADD_DCCNN] - Epoch: 14 acc: 0.7000 loss: 1.0020
+2026-07-05 15:48:27,884 - Validation Results [CADD_DCCNN] - Epoch: 15 acc: 0.7000 loss: 1.0036
+2026-07-05 15:48:28,631 - Validation Results [CADD_DCCNN] - Epoch: 16 acc: 0.6750 loss: 1.0157
+2026-07-05 15:48:29,389 - Validation Results [CADD_DCCNN] - Epoch: 17 acc: 0.6750 loss: 1.0255
+2026-07-05 15:48:30,124 - Validation Results [CADD_DCCNN] - Epoch: 18 acc: 0.6500 loss: 1.0195
+2026-07-05 15:48:30,818 - Validation Results [CADD_DCCNN] - Epoch: 19 acc: 0.6750 loss: 1.0359
+2026-07-05 15:48:31,203 - Validation Results [CADD_DCCNN] - Epoch: 20 acc: 0.6750 loss: 1.0104
+2026-07-05 15:48:31,768 - Validation Results [CADD_DCCNN] - Epoch: 21 acc: 0.6750 loss: 1.0299
+2026-07-05 15:48:32,412 - Validation Results [CADD_DCCNN] - Epoch: 22 acc: 0.6500 loss: 1.0240
+2026-07-05 15:48:33,048 - Validation Results [CADD_DCCNN] - Epoch: 23 acc: 0.5500 loss: 1.0438
+2026-07-05 15:48:33,728 - Validation Results [CADD_DCCNN] - Epoch: 24 acc: 0.6250 loss: 1.0379
+2026-07-05 15:48:34,359 - Validation Results [CADD_DCCNN] - Epoch: 25 acc: 0.6750 loss: 1.0242
+2026-07-05 15:48:35,043 - Validation Results [CADD_DCCNN] - Epoch: 26 acc: 0.6250 loss: 1.0035
+2026-07-05 15:48:35,758 - Validation Results [CADD_DCCNN] - Epoch: 27 acc: 0.6500 loss: 1.0063
+2026-07-05 15:48:36,420 - Validation Results [CADD_DCCNN] - Epoch: 28 acc: 0.7250 loss: 0.9721
+2026-07-05 15:48:37,049 - Validation Results [CADD_DCCNN] - Epoch: 29 acc: 0.7000 loss: 1.0138
+2026-07-05 15:48:37,690 - Validation Results [CADD_DCCNN] - Epoch: 30 acc: 0.6000 loss: 1.0397
+2026-07-05 15:48:38,321 - Validation Results [CADD_DCCNN] - Epoch: 31 acc: 0.6250 loss: 1.0035
+2026-07-05 15:48:38,963 - Validation Results [CADD_DCCNN] - Epoch: 32 acc: 0.5750 loss: 1.0313
+2026-07-05 15:48:39,580 - Validation Results [CADD_DCCNN] - Epoch: 33 acc: 0.6500 loss: 0.9984
+2026-07-05 15:48:40,267 - Validation Results [CADD_DCCNN] - Epoch: 34 acc: 0.5500 loss: 1.0386
+2026-07-05 15:48:40,910 - Validation Results [CADD_DCCNN] - Epoch: 35 acc: 0.6500 loss: 1.0095
+2026-07-05 15:48:41,570 - Validation Results [CADD_DCCNN] - Epoch: 36 acc: 0.6250 loss: 1.0273
+2026-07-05 15:48:42,262 - Validation Results [CADD_DCCNN] - Epoch: 37 acc: 0.6250 loss: 1.0112
+2026-07-05 15:48:42,928 - Validation Results [CADD_DCCNN] - Epoch: 38 acc: 0.6000 loss: 1.0342
+2026-07-05 15:48:43,559 - Validation Results [CADD_DCCNN] - Epoch: 39 acc: 0.6000 loss: 1.0523
+2026-07-05 15:48:43,575 - Saved model checkpoint: /home/lihanyue/home/workspace/emo-system/backend/seed/20260705_154815/model_best.pth (max_acc=0.7250)
+2026-07-05 15:48:43,575 - training artifact saved: {'model_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_154815/model_best.pth', 'meta_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_154815/training_meta.json', 'save_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_154815', 'max_acc': 0.725, 'model': 'CADD_DCCNN', 'feature_type': 'de_comp_4ch_1p5s'}
+2026-07-05 15:48:43,834 - t-SNE 结果保存失败（训练已完成）: [enforce fail at inline_container.cc:664] . unexpected pos 1024 vs 918
+2026-07-05 15:48:43,847 - [CADD_DCCNN] max acc=0.725 std=8.35677832365036
+2026-07-05 15:48:43,847 - [CADD_DCCNN] debug is done, acc= 0.7250 std= 8.3568
+2026-07-05 15:48:43,862 - 该程序运行时间：28秒

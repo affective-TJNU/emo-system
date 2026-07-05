@@ -1,0 +1,111 @@
+2026-07-05 16:34:14,739 - AGN 启动 | train_mode=debug | model=EEGMatch | feature=de_comp_4ch_1p5s | save_path=../backend/seed/20260705_163414
+2026-07-05 16:34:14,748 - brainda加载SEED完成: {'loader': 'brainda_seed_feature_tensor_loader', 'brainda_available': True, 'brainda_message': 'metabci.brainda available', 'dataset': 'SEED', 'feature_type': 'de_comp_4ch_1p5s', 'data_file': 'seed/de_comp_4ch_1p5s/data.pt', 'label_file': 'seed/de_comp_4ch_1p5s/label.pt', 'data_shape': [15, 3, 15, 4, 176, 5], 'label_shape': [15, 3, 15], 'note': 'SEED has been preprocessed into 4-channel 1.5s DE tensors; brainda wraps the dataset loading boundary.'}
+2026-07-05 16:34:15,358 - brainda LOSO划分完成: {'splitter': 'EnhancedLeaveOneGroupOut', 'brainda_api': 'metabci.brainda.algorithms.utils.model_selection.EnhancedLeaveOneGroupOut', 'strategy': 'LOSO', 'brainda_available': True, 'brainda_message': 'metabci.brainda imported', 'subject_count': 15, 'held_out_subject': 0, 'train_subjects': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], 'test_subjects': [0], 'note': 'LOSO subject indices are generated through brainda cross-validation API when available.'}
+2026-07-05 16:34:15,408 - features length: 176, channels nums: 4
+2026-07-05 16:34:16,399 - ===== 训练开始 | model=EEGMatch | feature=de_comp_4ch_1p5s | split=loso | epochs=100 | device=cuda:0 | save_path=../backend/seed/20260705_163414 =====
+2026-07-05 16:34:16,400 - 训练超参详情: Namespace(epochs=100, batch_size=8, nclass=3, gpu=0, device='cuda:0', dropout=0.15, lr=0.0005, k=10, seed=3364, train_mode='debug', model='EEGMatch', save_tsne_cm=1, save_model=1, save_path='../backend/seed/20260705_163414', have_domain=False, bands=5, dataset='seed', feature_type='de_comp_4ch_1p5s', label_type='label', channels_num=4, feature_len=176, raw_len=300, session=0, loss2=1e-05, loss1=0.0, split_method='loso', cur_sub_index=0, cur_session_index=0, cur_exp_index=0, clip_length=1, k_fold_nums=10, graph_out=128, attention_out=256, spp=True, num_levels=3, kadj=3, se_squeeze_ratio=4, graph_readout_dim=256, domain_class=15, adj_num=5, windows_num=12, tcn_hidden=30, tcn_layers=3, pooling_size=1, grl_alpha=1.0, rsr=1, k_ratio=6, loss_beta=1.0, eegmatch_use_std=1, eegmatch_hidden_1=256, eegmatch_hidden_2=512, config_path='global.config')
+2026-07-05 16:34:16,980 - Validation Results [EEGMatch] - Epoch: 0 acc: 0.3250 loss: 1.3318
+2026-07-05 16:34:17,261 - Validation Results [EEGMatch] - Epoch: 1 acc: 0.3750 loss: 1.2284
+2026-07-05 16:34:17,565 - Validation Results [EEGMatch] - Epoch: 2 acc: 0.4500 loss: 1.1785
+2026-07-05 16:34:17,841 - Validation Results [EEGMatch] - Epoch: 3 acc: 0.4250 loss: 1.1709
+2026-07-05 16:34:18,126 - Validation Results [EEGMatch] - Epoch: 4 acc: 0.3750 loss: 1.2769
+2026-07-05 16:34:18,544 - Validation Results [EEGMatch] - Epoch: 5 acc: 0.3750 loss: 1.1730
+2026-07-05 16:34:19,015 - Validation Results [EEGMatch] - Epoch: 6 acc: 0.5750 loss: 1.1066
+2026-07-05 16:34:19,385 - Validation Results [EEGMatch] - Epoch: 7 acc: 0.4250 loss: 1.1699
+2026-07-05 16:34:19,667 - Validation Results [EEGMatch] - Epoch: 8 acc: 0.4250 loss: 1.1477
+2026-07-05 16:34:19,941 - Validation Results [EEGMatch] - Epoch: 9 acc: 0.4500 loss: 1.1373
+2026-07-05 16:34:20,222 - Validation Results [EEGMatch] - Epoch: 10 acc: 0.4750 loss: 1.1293
+2026-07-05 16:34:20,508 - Validation Results [EEGMatch] - Epoch: 11 acc: 0.4750 loss: 1.0733
+2026-07-05 16:34:20,797 - Validation Results [EEGMatch] - Epoch: 12 acc: 0.5250 loss: 1.0813
+2026-07-05 16:34:21,106 - Validation Results [EEGMatch] - Epoch: 13 acc: 0.5000 loss: 1.0899
+2026-07-05 16:34:21,377 - Validation Results [EEGMatch] - Epoch: 14 acc: 0.3500 loss: 1.2194
+2026-07-05 16:34:21,642 - Validation Results [EEGMatch] - Epoch: 15 acc: 0.5500 loss: 1.0097
+2026-07-05 16:34:21,917 - Validation Results [EEGMatch] - Epoch: 16 acc: 0.4250 loss: 1.2555
+2026-07-05 16:34:22,187 - Validation Results [EEGMatch] - Epoch: 17 acc: 0.5250 loss: 1.0956
+2026-07-05 16:34:22,504 - Validation Results [EEGMatch] - Epoch: 18 acc: 0.4000 loss: 1.1602
+2026-07-05 16:34:22,950 - Validation Results [EEGMatch] - Epoch: 19 acc: 0.4000 loss: 1.1190
+2026-07-05 16:34:23,574 - Validation Results [EEGMatch] - Epoch: 20 acc: 0.4500 loss: 1.1784
+2026-07-05 16:34:24,172 - Validation Results [EEGMatch] - Epoch: 21 acc: 0.5000 loss: 1.1130
+2026-07-05 16:34:24,628 - Validation Results [EEGMatch] - Epoch: 22 acc: 0.5500 loss: 1.0370
+2026-07-05 16:34:25,337 - Validation Results [EEGMatch] - Epoch: 23 acc: 0.3500 loss: 1.1568
+2026-07-05 16:34:25,883 - Validation Results [EEGMatch] - Epoch: 24 acc: 0.4750 loss: 1.0732
+2026-07-05 16:34:26,511 - Validation Results [EEGMatch] - Epoch: 25 acc: 0.5000 loss: 0.9989
+2026-07-05 16:34:26,813 - Validation Results [EEGMatch] - Epoch: 26 acc: 0.4750 loss: 1.1102
+2026-07-05 16:34:27,110 - Validation Results [EEGMatch] - Epoch: 27 acc: 0.5500 loss: 1.0068
+2026-07-05 16:34:27,541 - Validation Results [EEGMatch] - Epoch: 28 acc: 0.3500 loss: 1.1477
+2026-07-05 16:34:27,883 - Validation Results [EEGMatch] - Epoch: 29 acc: 0.5250 loss: 1.0893
+2026-07-05 16:34:28,179 - Validation Results [EEGMatch] - Epoch: 30 acc: 0.5750 loss: 0.9373
+2026-07-05 16:34:28,475 - Validation Results [EEGMatch] - Epoch: 31 acc: 0.5250 loss: 1.0544
+2026-07-05 16:34:28,785 - Validation Results [EEGMatch] - Epoch: 32 acc: 0.5750 loss: 1.0166
+2026-07-05 16:34:29,060 - Validation Results [EEGMatch] - Epoch: 33 acc: 0.4500 loss: 1.2437
+2026-07-05 16:34:29,369 - Validation Results [EEGMatch] - Epoch: 34 acc: 0.5250 loss: 1.0241
+2026-07-05 16:34:29,651 - Validation Results [EEGMatch] - Epoch: 35 acc: 0.5750 loss: 1.0293
+2026-07-05 16:34:29,961 - Validation Results [EEGMatch] - Epoch: 36 acc: 0.5750 loss: 0.9964
+2026-07-05 16:34:30,301 - Validation Results [EEGMatch] - Epoch: 37 acc: 0.5000 loss: 0.9476
+2026-07-05 16:34:30,840 - Validation Results [EEGMatch] - Epoch: 38 acc: 0.5000 loss: 1.0074
+2026-07-05 16:34:31,247 - Validation Results [EEGMatch] - Epoch: 39 acc: 0.5500 loss: 1.2757
+2026-07-05 16:34:31,782 - Validation Results [EEGMatch] - Epoch: 40 acc: 0.4500 loss: 1.0113
+2026-07-05 16:34:32,231 - Validation Results [EEGMatch] - Epoch: 41 acc: 0.4500 loss: 1.2058
+2026-07-05 16:34:32,638 - Validation Results [EEGMatch] - Epoch: 42 acc: 0.5500 loss: 1.0728
+2026-07-05 16:34:32,960 - Validation Results [EEGMatch] - Epoch: 43 acc: 0.5000 loss: 1.0717
+2026-07-05 16:34:33,517 - Validation Results [EEGMatch] - Epoch: 44 acc: 0.4250 loss: 1.1421
+2026-07-05 16:34:34,043 - Validation Results [EEGMatch] - Epoch: 45 acc: 0.5750 loss: 0.9865
+2026-07-05 16:34:34,342 - Validation Results [EEGMatch] - Epoch: 46 acc: 0.4750 loss: 1.0730
+2026-07-05 16:34:34,749 - Validation Results [EEGMatch] - Epoch: 47 acc: 0.6250 loss: 0.9203
+2026-07-05 16:34:35,348 - Validation Results [EEGMatch] - Epoch: 48 acc: 0.4250 loss: 1.5288
+2026-07-05 16:34:35,911 - Validation Results [EEGMatch] - Epoch: 49 acc: 0.5250 loss: 1.0430
+2026-07-05 16:34:36,338 - Validation Results [EEGMatch] - Epoch: 50 acc: 0.3250 loss: 1.7932
+2026-07-05 16:34:36,711 - Validation Results [EEGMatch] - Epoch: 51 acc: 0.5500 loss: 0.9035
+2026-07-05 16:34:37,293 - Validation Results [EEGMatch] - Epoch: 52 acc: 0.5250 loss: 1.2447
+2026-07-05 16:34:37,607 - Validation Results [EEGMatch] - Epoch: 53 acc: 0.4250 loss: 1.4036
+2026-07-05 16:34:38,009 - Validation Results [EEGMatch] - Epoch: 54 acc: 0.4750 loss: 1.0781
+2026-07-05 16:34:38,296 - Validation Results [EEGMatch] - Epoch: 55 acc: 0.4250 loss: 1.2828
+2026-07-05 16:34:38,594 - Validation Results [EEGMatch] - Epoch: 56 acc: 0.5000 loss: 1.1953
+2026-07-05 16:34:38,900 - Validation Results [EEGMatch] - Epoch: 57 acc: 0.5000 loss: 1.2671
+2026-07-05 16:34:39,232 - Validation Results [EEGMatch] - Epoch: 58 acc: 0.5250 loss: 1.2002
+2026-07-05 16:34:39,859 - Validation Results [EEGMatch] - Epoch: 59 acc: 0.5500 loss: 1.1261
+2026-07-05 16:34:40,145 - Validation Results [EEGMatch] - Epoch: 60 acc: 0.4750 loss: 1.1494
+2026-07-05 16:34:40,444 - Validation Results [EEGMatch] - Epoch: 61 acc: 0.5500 loss: 1.2309
+2026-07-05 16:34:40,729 - Validation Results [EEGMatch] - Epoch: 62 acc: 0.5000 loss: 1.1719
+2026-07-05 16:34:41,014 - Validation Results [EEGMatch] - Epoch: 63 acc: 0.5750 loss: 1.1173
+2026-07-05 16:34:41,577 - Validation Results [EEGMatch] - Epoch: 64 acc: 0.4750 loss: 1.1896
+2026-07-05 16:34:42,213 - Validation Results [EEGMatch] - Epoch: 65 acc: 0.5750 loss: 1.1018
+2026-07-05 16:34:42,741 - Validation Results [EEGMatch] - Epoch: 66 acc: 0.5000 loss: 1.1640
+2026-07-05 16:34:43,275 - Validation Results [EEGMatch] - Epoch: 67 acc: 0.5000 loss: 1.1703
+2026-07-05 16:34:43,827 - Validation Results [EEGMatch] - Epoch: 68 acc: 0.5250 loss: 1.1964
+2026-07-05 16:34:44,351 - Validation Results [EEGMatch] - Epoch: 69 acc: 0.5250 loss: 0.9766
+2026-07-05 16:34:44,869 - Validation Results [EEGMatch] - Epoch: 70 acc: 0.5500 loss: 1.0520
+2026-07-05 16:34:45,392 - Validation Results [EEGMatch] - Epoch: 71 acc: 0.5750 loss: 1.0373
+2026-07-05 16:34:45,924 - Validation Results [EEGMatch] - Epoch: 72 acc: 0.5750 loss: 1.0604
+2026-07-05 16:34:46,465 - Validation Results [EEGMatch] - Epoch: 73 acc: 0.6000 loss: 1.1366
+2026-07-05 16:34:47,050 - Validation Results [EEGMatch] - Epoch: 74 acc: 0.6500 loss: 1.0627
+2026-07-05 16:34:47,662 - Validation Results [EEGMatch] - Epoch: 75 acc: 0.6000 loss: 1.0867
+2026-07-05 16:34:48,220 - Validation Results [EEGMatch] - Epoch: 76 acc: 0.6250 loss: 1.0412
+2026-07-05 16:34:48,962 - Validation Results [EEGMatch] - Epoch: 77 acc: 0.6750 loss: 0.8278
+2026-07-05 16:34:49,506 - Validation Results [EEGMatch] - Epoch: 78 acc: 0.6500 loss: 0.9653
+2026-07-05 16:34:50,032 - Validation Results [EEGMatch] - Epoch: 79 acc: 0.7000 loss: 0.9216
+2026-07-05 16:34:50,569 - Validation Results [EEGMatch] - Epoch: 80 acc: 0.6250 loss: 0.9208
+2026-07-05 16:34:51,078 - Validation Results [EEGMatch] - Epoch: 81 acc: 0.6750 loss: 1.0554
+2026-07-05 16:34:51,603 - Validation Results [EEGMatch] - Epoch: 82 acc: 0.7000 loss: 0.9932
+2026-07-05 16:34:52,120 - Validation Results [EEGMatch] - Epoch: 83 acc: 0.6750 loss: 1.0130
+2026-07-05 16:34:52,637 - Validation Results [EEGMatch] - Epoch: 84 acc: 0.7750 loss: 0.8187
+2026-07-05 16:34:53,147 - Validation Results [EEGMatch] - Epoch: 85 acc: 0.7250 loss: 0.9392
+2026-07-05 16:34:53,677 - Validation Results [EEGMatch] - Epoch: 86 acc: 0.7000 loss: 0.9700
+2026-07-05 16:34:54,192 - Validation Results [EEGMatch] - Epoch: 87 acc: 0.7000 loss: 0.9980
+2026-07-05 16:34:54,715 - Validation Results [EEGMatch] - Epoch: 88 acc: 0.7250 loss: 0.9295
+2026-07-05 16:34:55,232 - Validation Results [EEGMatch] - Epoch: 89 acc: 0.7250 loss: 0.8745
+2026-07-05 16:34:55,753 - Validation Results [EEGMatch] - Epoch: 90 acc: 0.7000 loss: 0.9826
+2026-07-05 16:34:56,269 - Validation Results [EEGMatch] - Epoch: 91 acc: 0.7250 loss: 0.8440
+2026-07-05 16:34:56,772 - Validation Results [EEGMatch] - Epoch: 92 acc: 0.7250 loss: 0.9301
+2026-07-05 16:34:57,346 - Validation Results [EEGMatch] - Epoch: 93 acc: 0.7000 loss: 0.9681
+2026-07-05 16:34:57,887 - Validation Results [EEGMatch] - Epoch: 94 acc: 0.7250 loss: 0.8721
+2026-07-05 16:34:58,404 - Validation Results [EEGMatch] - Epoch: 95 acc: 0.7500 loss: 0.8733
+2026-07-05 16:34:58,919 - Validation Results [EEGMatch] - Epoch: 96 acc: 0.7250 loss: 0.9216
+2026-07-05 16:34:59,532 - Validation Results [EEGMatch] - Epoch: 97 acc: 0.7000 loss: 0.9538
+2026-07-05 16:35:00,313 - Validation Results [EEGMatch] - Epoch: 98 acc: 0.7000 loss: 0.9566
+2026-07-05 16:35:00,860 - Validation Results [EEGMatch] - Epoch: 99 acc: 0.7000 loss: 0.9045
+2026-07-05 16:35:00,879 - Saved model checkpoint: /home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163414/model_best.pth (max_acc=0.7750)
+2026-07-05 16:35:00,880 - training artifact saved: {'model_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163414/model_best.pth', 'meta_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163414/training_meta.json', 'save_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163414', 'max_acc': 0.775, 'model': 'EEGMatch', 'feature_type': 'de_comp_4ch_1p5s'}
+2026-07-05 16:35:01,973 - [EEGMatch] max acc=0.775 std=11.096995323896408
+2026-07-05 16:35:01,973 - [EEGMatch] debug is done, acc= 0.7750 std= 11.0970
+2026-07-05 16:35:02,034 - 该程序运行时间：47秒

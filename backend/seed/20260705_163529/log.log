@@ -1,0 +1,31 @@
+2026-07-05 16:35:29,447 - AGN 启动 | train_mode=debug | model=ATGRNet | feature=de_comp_4ch_1p5s | save_path=../backend/seed/20260705_163529
+2026-07-05 16:35:29,457 - brainda加载SEED完成: {'loader': 'brainda_seed_feature_tensor_loader', 'brainda_available': True, 'brainda_message': 'metabci.brainda available', 'dataset': 'SEED', 'feature_type': 'de_comp_4ch_1p5s', 'data_file': 'seed/de_comp_4ch_1p5s/data.pt', 'label_file': 'seed/de_comp_4ch_1p5s/label.pt', 'data_shape': [15, 3, 15, 4, 176, 5], 'label_shape': [15, 3, 15], 'note': 'SEED has been preprocessed into 4-channel 1.5s DE tensors; brainda wraps the dataset loading boundary.'}
+2026-07-05 16:35:30,129 - brainda LOSO划分完成: {'splitter': 'EnhancedLeaveOneGroupOut', 'brainda_api': 'metabci.brainda.algorithms.utils.model_selection.EnhancedLeaveOneGroupOut', 'strategy': 'LOSO', 'brainda_available': True, 'brainda_message': 'metabci.brainda imported', 'subject_count': 15, 'held_out_subject': 0, 'train_subjects': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], 'test_subjects': [0], 'note': 'LOSO subject indices are generated through brainda cross-validation API when available.'}
+2026-07-05 16:35:30,220 - features length: 176, channels nums: 4
+2026-07-05 16:35:38,055 - ===== 训练开始 | model=ATGRNet | feature=de_comp_4ch_1p5s | split=loso | epochs=20 | device=cuda:0 | save_path=../backend/seed/20260705_163529 =====
+2026-07-05 16:35:38,055 - 训练超参详情: Namespace(epochs=20, batch_size=16, nclass=3, gpu=0, device='cuda:0', dropout=0.5, lr=0.0015, k=10, seed=3364, train_mode='debug', model='ATGRNet', save_tsne_cm=0, save_model=1, save_path='../backend/seed/20260705_163529', have_domain=False, bands=5, dataset='seed', feature_type='de_comp_4ch_1p5s', label_type='label', channels_num=4, feature_len=176, raw_len=300, session=0, loss2=0.0001, loss1=5e-06, split_method='loso', cur_sub_index=0, cur_session_index=0, cur_exp_index=0, clip_length=1, k_fold_nums=10, graph_out=128, attention_out=256, spp=True, num_levels=3, kadj=3, se_squeeze_ratio=4, graph_readout_dim=256, domain_class=15, adj_num=5, windows_num=12, tcn_hidden=30, tcn_layers=3, pooling_size=1, grl_alpha=1.0, rsr=1, k_ratio=6, loss_beta=1.0, eegmatch_use_std=0, eegmatch_hidden_1=128, eegmatch_hidden_2=256, config_path='global.config')
+2026-07-05 16:35:48,524 - Validation Results [ATGRNet] - Epoch: 0 acc: 0.5312 loss: 1.5386
+2026-07-05 16:35:58,995 - Validation Results [ATGRNet] - Epoch: 1 acc: 0.6250 loss: 0.6563
+2026-07-05 16:36:12,642 - Validation Results [ATGRNet] - Epoch: 2 acc: 0.7188 loss: 0.5081
+2026-07-05 16:36:27,141 - Validation Results [ATGRNet] - Epoch: 3 acc: 0.7812 loss: 0.3620
+2026-07-05 16:36:44,439 - Validation Results [ATGRNet] - Epoch: 4 acc: 0.6875 loss: 0.6308
+2026-07-05 16:37:00,219 - Validation Results [ATGRNet] - Epoch: 5 acc: 0.7812 loss: 0.3751
+2026-07-05 16:37:16,436 - Validation Results [ATGRNet] - Epoch: 6 acc: 0.7812 loss: 0.6991
+2026-07-05 16:37:31,592 - Validation Results [ATGRNet] - Epoch: 7 acc: 0.6875 loss: 1.2529
+2026-07-05 16:37:47,411 - Validation Results [ATGRNet] - Epoch: 8 acc: 0.7188 loss: 0.7291
+2026-07-05 16:38:02,506 - Validation Results [ATGRNet] - Epoch: 9 acc: 0.7188 loss: 0.7404
+2026-07-05 16:38:18,717 - Validation Results [ATGRNet] - Epoch: 10 acc: 0.6875 loss: 1.0175
+2026-07-05 16:38:32,708 - Validation Results [ATGRNet] - Epoch: 11 acc: 0.6562 loss: 0.9716
+2026-07-05 16:38:49,578 - Validation Results [ATGRNet] - Epoch: 12 acc: 0.7188 loss: 0.7056
+2026-07-05 16:39:06,115 - Validation Results [ATGRNet] - Epoch: 13 acc: 0.7500 loss: 0.7465
+2026-07-05 16:39:22,546 - Validation Results [ATGRNet] - Epoch: 14 acc: 0.6875 loss: 0.9150
+2026-07-05 16:39:39,231 - Validation Results [ATGRNet] - Epoch: 15 acc: 0.7500 loss: 0.9783
+2026-07-05 16:39:51,104 - Validation Results [ATGRNet] - Epoch: 16 acc: 0.7812 loss: 0.7475
+2026-07-05 16:40:06,293 - Validation Results [ATGRNet] - Epoch: 17 acc: 0.7188 loss: 1.0209
+2026-07-05 16:40:21,591 - Validation Results [ATGRNet] - Epoch: 18 acc: 0.6875 loss: 1.2324
+2026-07-05 16:40:36,680 - Validation Results [ATGRNet] - Epoch: 19 acc: 0.7188 loss: 0.8699
+2026-07-05 16:40:36,722 - Saved model checkpoint: /home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163529/model_best.pth (max_acc=0.7812)
+2026-07-05 16:40:36,722 - training artifact saved: {'model_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163529/model_best.pth', 'meta_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163529/training_meta.json', 'save_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163529', 'max_acc': 0.78125, 'model': 'ATGRNet', 'feature_type': 'de_comp_4ch_1p5s'}
+2026-07-05 16:40:36,722 - [ATGRNet] max acc=0.78125 std=6.00678063929081
+2026-07-05 16:40:36,722 - [ATGRNet] debug is done, acc= 0.7812 std= 6.0068
+2026-07-05 16:40:36,733 - 该程序运行时间：5分7秒

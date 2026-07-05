@@ -1,8 +1,8 @@
 {
-  "model_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_210224/model_best.pth",
-  "meta_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_210224/training_meta.json",
-  "save_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260704_210224",
-  "max_acc": 0.775,
-  "model": "CADD_DCCNN",
+  "model_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163529/model_best.pth",
+  "meta_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163529/training_meta.json",
+  "save_path": "/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_163529",
+  "max_acc": 0.78125,
+  "model": "ATGRNet",
   "feature_type": "de_comp_4ch_1p5s"
 }

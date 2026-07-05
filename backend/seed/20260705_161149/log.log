@@ -1,0 +1,61 @@
+2026-07-05 16:11:49,776 - AGN 启动 | train_mode=debug | model=CCA_RMPG | feature=de_comp_4ch_1p5s | save_path=../backend/seed/20260705_161149
+2026-07-05 16:11:49,787 - brainda加载SEED完成: {'loader': 'brainda_seed_feature_tensor_loader', 'brainda_available': True, 'brainda_message': 'metabci.brainda available', 'dataset': 'SEED', 'feature_type': 'de_comp_4ch_1p5s', 'data_file': 'seed/de_comp_4ch_1p5s/data.pt', 'label_file': 'seed/de_comp_4ch_1p5s/label.pt', 'data_shape': [15, 3, 15, 4, 176, 5], 'label_shape': [15, 3, 15], 'note': 'SEED has been preprocessed into 4-channel 1.5s DE tensors; brainda wraps the dataset loading boundary.'}
+2026-07-05 16:11:50,569 - brainda LOSO划分完成: {'splitter': 'EnhancedLeaveOneGroupOut', 'brainda_api': 'metabci.brainda.algorithms.utils.model_selection.EnhancedLeaveOneGroupOut', 'strategy': 'LOSO', 'brainda_available': True, 'brainda_message': 'metabci.brainda imported', 'subject_count': 15, 'held_out_subject': 0, 'train_subjects': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], 'test_subjects': [0], 'note': 'LOSO subject indices are generated through brainda cross-validation API when available.'}
+2026-07-05 16:11:50,862 - features length: 176, channels nums: 4
+2026-07-05 16:11:52,127 - ===== 训练开始 | model=CCA_RMPG | feature=de_comp_4ch_1p5s | split=loso | epochs=50 | device=cuda:0 | save_path=../backend/seed/20260705_161149 =====
+2026-07-05 16:11:52,128 - 训练超参详情: Namespace(epochs=50, batch_size=8, nclass=3, gpu=0, device='cuda:0', dropout=0.5, lr=0.0001, k=10, seed=3364, train_mode='debug', model='CCA_RMPG', save_tsne_cm=1, save_model=1, save_path='../backend/seed/20260705_161149', have_domain=False, bands=5, dataset='seed', feature_type='de_comp_4ch_1p5s', label_type='label', channels_num=4, feature_len=176, raw_len=300, session=0, loss2=0.0001, loss1=5e-06, split_method='loso', cur_sub_index=0, cur_session_index=0, cur_exp_index=0, clip_length=1, k_fold_nums=10, graph_out=128, attention_out=256, spp=True, num_levels=3, kadj=3, se_squeeze_ratio=4, graph_readout_dim=256, domain_class=15, adj_num=5, windows_num=12, tcn_hidden=30, tcn_layers=3, pooling_size=1, grl_alpha=1.0, rsr=1, k_ratio=6, loss_beta=1.0, eegmatch_use_std=0, eegmatch_hidden_1=128, eegmatch_hidden_2=256, config_path='global.config')
+2026-07-05 16:11:54,106 - Validation Results [CCA_RMPG] - Epoch: 0 acc: 0.4250 loss: 3.2056
+2026-07-05 16:11:55,116 - Validation Results [CCA_RMPG] - Epoch: 1 acc: 0.5250 loss: 2.7736
+2026-07-05 16:11:56,083 - Validation Results [CCA_RMPG] - Epoch: 2 acc: 0.5750 loss: 2.8764
+2026-07-05 16:11:57,099 - Validation Results [CCA_RMPG] - Epoch: 3 acc: 0.6000 loss: 2.6050
+2026-07-05 16:11:58,136 - Validation Results [CCA_RMPG] - Epoch: 4 acc: 0.4500 loss: 3.4393
+2026-07-05 16:11:59,097 - Validation Results [CCA_RMPG] - Epoch: 5 acc: 0.5750 loss: 2.9732
+2026-07-05 16:12:00,065 - Validation Results [CCA_RMPG] - Epoch: 6 acc: 0.5250 loss: 3.2034
+2026-07-05 16:12:01,105 - Validation Results [CCA_RMPG] - Epoch: 7 acc: 0.5750 loss: 3.3630
+2026-07-05 16:12:02,774 - Validation Results [CCA_RMPG] - Epoch: 8 acc: 0.5500 loss: 3.4588
+2026-07-05 16:12:03,798 - Validation Results [CCA_RMPG] - Epoch: 9 acc: 0.6000 loss: 3.1410
+2026-07-05 16:12:04,932 - Validation Results [CCA_RMPG] - Epoch: 10 acc: 0.6500 loss: 3.2152
+2026-07-05 16:12:06,174 - Validation Results [CCA_RMPG] - Epoch: 11 acc: 0.6250 loss: 3.0476
+2026-07-05 16:12:07,237 - Validation Results [CCA_RMPG] - Epoch: 12 acc: 0.6500 loss: 2.7936
+2026-07-05 16:12:08,349 - Validation Results [CCA_RMPG] - Epoch: 13 acc: 0.5750 loss: 3.3590
+2026-07-05 16:12:09,694 - Validation Results [CCA_RMPG] - Epoch: 14 acc: 0.5500 loss: 3.4479
+2026-07-05 16:12:10,569 - Validation Results [CCA_RMPG] - Epoch: 15 acc: 0.6000 loss: 3.2830
+2026-07-05 16:12:11,384 - Validation Results [CCA_RMPG] - Epoch: 16 acc: 0.6500 loss: 2.7674
+2026-07-05 16:12:11,937 - Validation Results [CCA_RMPG] - Epoch: 17 acc: 0.6750 loss: 2.9966
+2026-07-05 16:12:12,495 - Validation Results [CCA_RMPG] - Epoch: 18 acc: 0.6250 loss: 3.2227
+2026-07-05 16:12:13,089 - Validation Results [CCA_RMPG] - Epoch: 19 acc: 0.6250 loss: 3.1369
+2026-07-05 16:12:13,619 - Validation Results [CCA_RMPG] - Epoch: 20 acc: 0.6250 loss: 3.1007
+2026-07-05 16:12:14,119 - Validation Results [CCA_RMPG] - Epoch: 21 acc: 0.6500 loss: 2.9269
+2026-07-05 16:12:15,157 - Validation Results [CCA_RMPG] - Epoch: 22 acc: 0.6250 loss: 3.1007
+2026-07-05 16:12:15,965 - Validation Results [CCA_RMPG] - Epoch: 23 acc: 0.6000 loss: 3.1851
+2026-07-05 16:12:16,595 - Validation Results [CCA_RMPG] - Epoch: 24 acc: 0.6250 loss: 3.0626
+2026-07-05 16:12:17,141 - Validation Results [CCA_RMPG] - Epoch: 25 acc: 0.6250 loss: 3.1676
+2026-07-05 16:12:17,711 - Validation Results [CCA_RMPG] - Epoch: 26 acc: 0.6500 loss: 2.8805
+2026-07-05 16:12:18,616 - Validation Results [CCA_RMPG] - Epoch: 27 acc: 0.6500 loss: 2.7402
+2026-07-05 16:12:19,553 - Validation Results [CCA_RMPG] - Epoch: 28 acc: 0.5750 loss: 3.4201
+2026-07-05 16:12:20,666 - Validation Results [CCA_RMPG] - Epoch: 29 acc: 0.6000 loss: 3.3351
+2026-07-05 16:12:21,587 - Validation Results [CCA_RMPG] - Epoch: 30 acc: 0.6250 loss: 3.0645
+2026-07-05 16:12:22,530 - Validation Results [CCA_RMPG] - Epoch: 31 acc: 0.5750 loss: 3.3881
+2026-07-05 16:12:23,520 - Validation Results [CCA_RMPG] - Epoch: 32 acc: 0.6000 loss: 3.3532
+2026-07-05 16:12:24,491 - Validation Results [CCA_RMPG] - Epoch: 33 acc: 0.6500 loss: 3.1228
+2026-07-05 16:12:25,498 - Validation Results [CCA_RMPG] - Epoch: 34 acc: 0.6250 loss: 2.9791
+2026-07-05 16:12:26,676 - Validation Results [CCA_RMPG] - Epoch: 35 acc: 0.6250 loss: 3.0765
+2026-07-05 16:12:27,689 - Validation Results [CCA_RMPG] - Epoch: 36 acc: 0.6500 loss: 3.0605
+2026-07-05 16:12:28,687 - Validation Results [CCA_RMPG] - Epoch: 37 acc: 0.6250 loss: 3.1031
+2026-07-05 16:12:29,655 - Validation Results [CCA_RMPG] - Epoch: 38 acc: 0.6000 loss: 3.2184
+2026-07-05 16:12:30,691 - Validation Results [CCA_RMPG] - Epoch: 39 acc: 0.6000 loss: 3.1493
+2026-07-05 16:12:31,727 - Validation Results [CCA_RMPG] - Epoch: 40 acc: 0.6750 loss: 2.6111
+2026-07-05 16:12:32,670 - Validation Results [CCA_RMPG] - Epoch: 41 acc: 0.5750 loss: 3.3184
+2026-07-05 16:12:33,615 - Validation Results [CCA_RMPG] - Epoch: 42 acc: 0.6000 loss: 3.1498
+2026-07-05 16:12:34,640 - Validation Results [CCA_RMPG] - Epoch: 43 acc: 0.6250 loss: 2.8496
+2026-07-05 16:12:35,612 - Validation Results [CCA_RMPG] - Epoch: 44 acc: 0.6250 loss: 3.1079
+2026-07-05 16:12:36,637 - Validation Results [CCA_RMPG] - Epoch: 45 acc: 0.6000 loss: 3.3026
+2026-07-05 16:12:37,678 - Validation Results [CCA_RMPG] - Epoch: 46 acc: 0.6250 loss: 3.0387
+2026-07-05 16:12:38,646 - Validation Results [CCA_RMPG] - Epoch: 47 acc: 0.6250 loss: 3.1152
+2026-07-05 16:12:39,684 - Validation Results [CCA_RMPG] - Epoch: 48 acc: 0.6250 loss: 3.1023
+2026-07-05 16:12:40,697 - Validation Results [CCA_RMPG] - Epoch: 49 acc: 0.6000 loss: 3.2816
+2026-07-05 16:12:40,713 - Saved model checkpoint: /home/lihanyue/home/workspace/emo-system/backend/seed/20260705_161149/model_best.pth (max_acc=0.6750)
+2026-07-05 16:12:40,713 - training artifact saved: {'model_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_161149/model_best.pth', 'meta_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_161149/training_meta.json', 'save_path': '/home/lihanyue/home/workspace/emo-system/backend/seed/20260705_161149', 'max_acc': 0.675, 'model': 'CCA_RMPG', 'feature_type': 'de_comp_4ch_1p5s'}
+2026-07-05 16:12:41,272 - [CCA_RMPG] max acc=0.675 std=4.827641323208809
+2026-07-05 16:12:41,272 - [CCA_RMPG] debug is done, acc= 0.6750 std= 4.8276
+2026-07-05 16:12:41,302 - 该程序运行时间：52秒
