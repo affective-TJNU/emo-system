@@ -18,7 +18,7 @@
 ```bash
 # 1. 安装 MetaBCI（在 MetaBCI-master 目录）
 cd MetaBCI-master && pip install -e ".[brainda,brainflow,brainstim]"
-# 2.将seed原始数据processed EEG文件放至emo-system/backend/seed路径下
+# 2.将seed原始数据Preprocessed_EEG文件放至emo-system/backend/seed路径下
 # 3. 回到项目根目录一键启动（后端 5001 + 前端 5173）
 cd .. && python start.py
 ```
